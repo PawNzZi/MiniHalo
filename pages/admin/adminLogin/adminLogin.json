@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "管理员登陆",
+  "navigationBarBackgroundColor": "#495060",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-image": "../../../dist/image/index",
+    "van-button": "../../../dist/button/index",
+    "van-field": "../../../dist/field/index",
+    "van-cell-group": "../../../dist/cell-group/index"
+  }
+}

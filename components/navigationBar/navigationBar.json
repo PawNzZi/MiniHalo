@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-icon": "../../dist/icon/index",
+    "van-image": "../../dist/image/index",
+    "van-search": "../../dist/search/index",
+    "van-dropdown-menu": "../../dist/dropdown-menu/index",
+    "van-dropdown-item": "../../dist/dropdown-item/index"
+  }
+}

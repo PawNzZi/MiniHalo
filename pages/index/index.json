@@ -1,0 +1,13 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "component-navigationBar": "../../components/navigationBar/navigationBar",
+    "component-itemCard": "../../components/itemCard/itemCard",
+    "component-addTip":"../../components/addTip/addTip",
+    "van-grid": "../../dist/grid/index",
+    "van-grid-item": "../../dist/grid-item/index",
+    "van-image": "../../dist/image/index",
+    "van-icon": "../../dist/icon/index"
+
+  }
+}

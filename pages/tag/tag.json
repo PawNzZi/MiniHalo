@@ -1,0 +1,9 @@
+{
+  
+  "navigationBarBackgroundColor": "#495060",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "component-itemCard": "../../components/itemCard/itemCard",
+    "van-empty": "../../dist/empty/index"
+  }
+}

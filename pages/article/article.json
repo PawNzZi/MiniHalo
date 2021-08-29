@@ -1,0 +1,15 @@
+{
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "htmltowxml": "plugin://htmltowxml/view",
+    "van-icon": "../../dist/icon/index",
+    "van-sticky": "../../dist/sticky/index",
+    "van-divider": "../../dist/divider/index",
+    "van-empty": "../../dist/empty/index",
+    "van-tag": "../../dist/tag/index",
+    "van-popup": "../../dist/popup/index",
+    "van-button": "../../dist/button/index",
+    "components-commentItem":"../../components/commentItem/commentItem"
+  }
+}

@@ -1,0 +1,30 @@
+<!--components/commentItem/commentItem.wxml-->
+<block wx:for="{{commentList}}" wx:if="{{commentList.length>0}}">
+			<view class="comment-item">
+				<image style="width: 80rpx;height: 80rpx;border-radius: 14rpx;" src="{{item.authorUrl}}">
+				</image>
+				<view class="comment-item-r">
+					<view style="display: flex;flex-direction: row;align-items: center;">
+						<view class="comment-author">{{item.author}}</view>
+						<van-tag color="#2F8132" wx:if="{{item.isAdmin}}">管理员</van-tag>
+						<van-tag color="#f2826a" wx:elif="{{item.email != 'fwmeng_vip@163.com'}}">web</van-tag>
+						<van-tag color="#495060" wx:else>小程序</van-tag>
+					</view>
+          <!-- 管理员才显示 -->
+          <view class="comment-content" wx:if="{{admin}}">《{{item.post.title}}》</view>
+					<view class="comment-reply" wx:if="{{item.parent !=null}}">回复@{{item.parent.author}}：{{item.parent.content}}
+					</view>
+					<view class="comment-content">{{item.content}}</view>
+					<view class="comment-date">
+            <text style="margin-right: 20rpx;color:#2F8132;font-size:24rpx;" bindtap="passComment"
+							data-item="{{item}}" wx:if="{{admin}}">通过</text>
+						<text style="margin-right: 20rpx;color:#495060;font-size:24rpx;" bindtap="replyComment"
+							data-item="{{item}}" >回复</text>
+              <text style="margin-right: 20rpx;color:#AB0125;font-size:24rpx;" bindtap="deleteComment"
+							data-item="{{item}}" wx:if="{{admin}}">删除</text>
+						<text>{{item.createTime}}</text>
+					</view>
+					<view style="height: 2rpx;background-color: #e9eaec;margin-top: 10rpx;"></view>
+				</view>
+			</view>
+		</block>

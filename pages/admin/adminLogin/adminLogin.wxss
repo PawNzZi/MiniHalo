@@ -1,0 +1,20 @@
+/* pages/admin/adminLogin/adminLogin.wxss */
+.login-view{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  margin: 80rpx 80rpx 0 80rpx;
+  padding: 50rpx;
+  box-shadow: 0 4rpx 10rpx rgb(0, 0, 0, .2);
+  border-radius: 12rpx;
+}
+.input-view{
+  margin-top: 40rpx;
+  border:1rpx solid #dddee1;
+  padding: 20rpx;
+  border-radius: 9rpx;
+}
+.van-button{
+  margin-top: 40rpx !important;
+}

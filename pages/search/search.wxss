@@ -1,0 +1,4 @@
+/* pages/search/search.wxss */
+.van-divider{
+  margin: 0 0 !important;
+}

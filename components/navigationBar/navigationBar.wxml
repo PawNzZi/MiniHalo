@@ -1,0 +1,19 @@
+<!--components/navigationBar.wxml-->
+<view class="contains-view" style="background:{{backgroundColor}};height:{{status + navHeight}}px;">
+	<view class="status" style="height:{{status}}px;"></view>
+	<view class="nav" style="height:{{navHeight}}px">
+		<!-- <view class="user-avator" bindtap="touchAvator" data-uid="{{uid}}"> -->
+		<!-- <image src="{{avator}}" style="margin-left: 30rpx;width:60rpx;height:60rpx;border-radius: 60rpx;" bindtap="touchAvator" data-uid="{{uid}}"></image> -->
+		<!-- </view> -->
+		<van-icon name="arrow-left" size="25px" wx:if="{{type == 3}}" bindtap="backPage"  style="margin-left:5rpx;"/>
+		<view style="margin-left:5rpx" wx:if="{{type == 3}}">
+			<van-dropdown-menu active-color="#a30022">
+				<van-dropdown-item value="{{ optionValue1 }}" options="{{ optionArray }}" bind:change="dropdownChange" />
+			</van-dropdown-menu>
+		</view>
+		<view class="user-search">
+			<van-search value="{{searchKey }}" shape="round" background="{{searchColor}}" placeholder="请输入搜索关键词"
+				bind:search="onSearch" disabled="{{disabled}}" bindtap="touchSearch" bind:clear="clearKeyWord"/>
+		</view>
+	</view>
+</view>

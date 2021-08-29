@@ -1,0 +1,7 @@
+/* pages/category/category.wxss */
+.van-divider{
+  margin: 0 0 !important;
+}
+.custom-empty{
+  margin: auto;
+}

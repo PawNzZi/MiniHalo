@@ -1,0 +1,160 @@
+/* pages/user/user.wxss */
+
+
+page {
+  background: #f8f8f8
+}
+
+.login {
+  background-color: transparent !important;
+  border-style: none !important;
+}
+.userinfo-right {
+  position: absolute;
+  top: 80rpx;
+  left: 138rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9;
+}
+.user-card {
+  margin: 60rpx 58rpx;
+  height: 300rpx;
+  border-radius: 18rpx;
+  background-size: cover;      /* 覆盖:图片成比例填满盒子。可用于适配 */
+  background-size: contain;     /* 包含:图片成比例放大,可能不会填满盒子。可用于适配  */
+
+}
+.avatar-round{
+  position: absolute;
+  top: 30rpx;
+  z-index: 10;
+  width: 164rpx;
+  height: 164rpx;
+  background-color: #fff;
+  left: 48rpx;
+  border-radius: 164rpx;
+}
+.userAvatar {
+  position: absolute;
+  top: 30rpx;
+  z-index: 10;
+}
+
+.order-card {
+  position: absolute;
+  padding: 20rpx;
+  top: 230rpx;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  height: 180rpx;
+  border-radius: 15rpx;
+  width: 85%;
+  margin: auto;
+  box-shadow: 0 4rpx 10rpx rgb(0, 0, 0, .2);
+}
+
+.van-divider {
+  margin: 20rpx 0 !important;
+}
+
+.service-card {
+  position: absolute;
+  padding: 20rpx;
+  top: 230rpx;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  height: 340rpx;
+  border-radius: 15rpx;
+  width: 85%;
+  margin: auto;
+  box-shadow: 0 4rpx 10rpx rgb(0, 0, 0, .2);
+}
+.manage-card{
+  position: absolute;
+  padding: 20rpx;
+  top: 650rpx;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border-radius: 15rpx;
+  width: 85%;
+  margin: auto;
+  box-shadow: 0 4rpx 10rpx rgb(0, 0, 0, .2);
+}
+.service-card-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card-view-bottom {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.service-card-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 150rpx;
+  flex:0 1 ;
+}
+.link-card-view-bottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* padding: 0 5% 20rpx 5%; */
+  padding-left:  3%;
+  padding-right: 3%;
+  background: #fff;
+}
+/* 使用伪元素辅助左对齐 */
+/* .link-card-view-bottom::after {
+  content: '';
+  flex: 1;  
+} */
+
+.link-card-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* flex: 1; */
+  width: 25%;
+  margin-top: 15rpx;
+}
+
+/* 最后一项margin-right:auto */
+.link-card-item:last-child {
+  margin-right: auto;
+}
+.button-style {
+  width: 180rpx !important;
+  height: 130rpx !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background-color: #fff !important;
+  font-weight: normal !important;
+  padding: 10rpx 20rpx !important;
+  align-items: center !important;
+}
+
+button::after {
+  border: none;
+}
+.version {
+  position: fixed;
+  bottom: 20rpx;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666
+}
+

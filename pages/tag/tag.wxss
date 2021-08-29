@@ -1,0 +1,4 @@
+/* pages/tag/tag.wxss */
+page{
+  background-color: #fff;
+}

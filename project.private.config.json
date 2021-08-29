@@ -1,0 +1,80 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": 0,
+          "name": "components/navigationBar/navigationBar",
+          "pathName": "components/navigationBar/navigationBar",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "user",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/article/article",
+          "pathName": "pages/article/article",
+          "query": "postId=34",
+          "scene": null
+        },
+        {
+          "name": "itemCard",
+          "pathName": "components/itemCard/itemCard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/search/search",
+          "pathName": "pages/search/search",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/article/article",
+          "pathName": "pages/article/article",
+          "query": "postId=35",
+          "scene": null
+        },
+        {
+          "name": "pages/category/category",
+          "pathName": "pages/category/category",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/user/user",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/admin/adminLogin/adminLogin",
+          "pathName": "pages/admin/adminLogin/adminLogin",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "dashBoard",
+          "pathName": "pages/admin/dashBoard/dashBoard",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

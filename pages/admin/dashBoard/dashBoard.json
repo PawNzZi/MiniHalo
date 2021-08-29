@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "DashBoard",
+  "navigationBarBackgroundColor": "#495060",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-tag": "../../../dist/tag/index",
+    "van-sticky": "../../../dist/sticky/index"
+  }
+}

@@ -1,0 +1,119 @@
+/* pages/article/article.wxss */
+.van-divider {
+  margin: 0 0 !important;
+}
+
+.back-icon {
+  position: absolute;
+  left: 30rpx;
+}
+
+.data-view {
+  /* width: 100%; */
+  padding: 15rpx 25rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.data-view-left {
+  display: flex;
+  flex-direction: row;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mzsm-view {
+  display: flex;
+  flex-direction: column;
+  margin: 0 30rpx 30rpx 30rpx;
+  background-color: #fff;
+  padding: 25rpx 30rpx;
+  box-shadow: 0px 0px 6px 0px rgba(73,80,96,0.5);
+  border-radius: 9rpx;
+}
+
+.comment-view {
+  padding-bottom: 105rpx;
+}
+
+/* .comment-item {
+  display: flex;
+  flex-direction: row;
+  margin: 30rpx 30rpx 0 30rpx;
+}
+
+.comment-item-r {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30rpx;
+  width: 80%;
+  justify-content: space-between;
+}
+
+.comment-author {
+  font-size: 28rpx;
+  color: #495060;
+  margin-right: 20rpx;
+} */
+.comment-reply{
+  margin-top: 15rpx;
+  font-size: 22rpx;
+  color: #80848f;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* .comment-content {
+  margin-top: 15rpx;
+  font-size: 26rpx;
+  color: #495060;
+}
+
+.comment-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 22rpx;
+  color: #80848f;
+  margin-top: 18rpx;
+  align-items: center;
+} */
+
+.input {
+  margin-left: 30rpx;
+  width: 80%;
+  margin-right: 20rpx;
+}
+.textarea{
+  margin: 15rpx 0 20rpx 0;
+  background-color: #f8f8f9;
+  /* width: 90%; */
+  border-radius: 9rpx;
+  padding: 15rpx;
+  color: #495060;
+  font-size: 28rpx;
+}
+.commit-btn {
+  width: 150rpx !important;
+  height: 70rpx !important;
+  margin-left: 30rpx !important;
+}
+/* .van-popup{
+  width: 80% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 10rpx !important;
+} */
+.van-button{
+  width: 150rpx !important;
+  height: 60rpx !important;
+  margin-left: 30rpx !important;
+}

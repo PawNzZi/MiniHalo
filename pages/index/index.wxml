@@ -1,0 +1,56 @@
+<!--index.wxml-->
+<!-- <view style="position: fixed;top:{{naviSize}}px;right: 5rpx;">
+  <image src="../../img/tip.png" style="width:230rpx ;height: 65rpx;"></image>
+</view> -->
+<component-addTip name="13号档案馆" custom />
+<view>
+	<component-navigationBar backgroundColor="{{bgColor}}" searchColor=""></component-navigationBar>
+	<canvas canvas-id="myCanvas" style="position:fixed;left: 10000rpx"></canvas>
+	<view style="width:100%; overflow: hidden;">
+		<view class="head-background" style="background:{{headBackground}}"></view>
+	</view>
+
+	<view class="banner">
+		<swiper class="swiper" bindchange="backgroundChange" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"
+			interval="{{interval}}" duration="{{duration}}">
+			<block wx:for="{{banner}}">
+				<swiper-item bindtap="bannerClick" data-postid="{{item.id}}">
+					<view class="swiper-title">{{item.title}}</view>
+					<image class="swiper-item" src="{{item.thumbnail}}"></image>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+
+</view>
+
+<!--分类-->
+<view class="category-view">
+	<block wx:for="{{categoryList}}">
+		<view class="category-item" bindtap="toCategoryPage" data-slug="{{item.slug}}">
+			<van-image width="60" height="60" image-class="category-cover" src="{{item.thumbnail}}" />
+			<text style="font-size:26rpx;color:#495060">{{item.name}}</text>
+		</view>
+	</block>
+</view>
+<!-- 标签 -->
+<view class="tag-view">
+	<view style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+		<text class="bold-text">热门标签</text>
+		<text style="font-size: 24rpx;color: #dddee1;">*向右可以滑动</text>
+	</view>
+	<scroll-view scroll-x="true" class="scroll-view_H">
+		<view class="scrollview-contains">
+			<block wx:for="{{tagsListA}}">
+				<view class="item-view" bindtap="toTagPage" data-slug="{{item.slug}}" data-name="{{item.name}}">
+					#{{item.name}}
+				</view>
+			</block>
+		</view>
+	</scroll-view>
+</view>
+<!--文章列表-->
+<view class="tag-view" style="margin-bottom: 0;">
+	<text class="bold-text">每日更新</text>
+	<component-itemCard array="{{articleList}}"></component-itemCard>
+</view>

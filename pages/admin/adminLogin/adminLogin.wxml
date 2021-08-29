@@ -1,0 +1,12 @@
+<!--pages/admin/adminLogin/adminLogin.wxml-->
+<view>
+  <view class="login-view">
+    <van-image round width="80" height="80" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+    
+    <view class="input-view">
+      <van-field value="{{ userNameValue }}" placeholder="请输入用户名" required bind:change="getUserName" />
+      <van-field value="{{ passwordValue }}" placeholder="请输入密码" border="{{ false }}" required type="password" bind:change="getPassword" />
+    </view>
+    <van-button color="#495060" bind:click="login">登陆</van-button>
+  </view>
+</view>

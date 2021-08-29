@@ -1,0 +1,14 @@
+{
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "van-sidebar": "../../dist/sidebar/index",
+    "van-sidebar-item": "../../dist/sidebar-item/index",
+    "van-empty": "../../dist/empty/index",
+    "van-divider": "../../dist/divider/index",
+    "van-sticky": "../../dist/sticky/index",
+    "component-itemCard": "../../components/itemCard/itemCard",
+    "component-navigationBar": "../../components/navigationBar/navigationBar"
+
+  }
+}

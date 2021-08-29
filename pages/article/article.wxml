@@ -1,0 +1,105 @@
+<!--pages/article/article.wxml-->
+<page-meta page-style="{{ showReplyPopup ? 'overflow: hidden;' : '' }}" />
+<view>
+	<!-- <view style="background: {{statusColor}};width: 100%;height: 20px;"></view> -->
+	<!-- 返回按钮 -->
+	<view class="back-icon" bindtap="backPage" style="top:{{topSize}}px">
+		<van-icon name="arrow-left" size="50rpx" />
+	</view>
+	<!--缩略图-->
+	<image style="width:100%;height:500rpx;border-bottom-left-radius: 18rpx;border-bottom-right-radius: 18rpx;"
+		src="{{article.thumbnail}}"></image>
+	<!--标题-->
+	<van-sticky offset-top="{{ 0 }}" bindscroll="stickyScroll">
+		<view style="background: #f8f8f9;width: 100%;height: {{statusSize}}px;"></view>
+		<view style="background-color: #f8f8f9;">
+			<view style="padding:0 20rpx;color:#495060;font-weight: bold;font-size: 36rpx;">
+				{{article.title}}
+			</view>
+			<!--阅读、点赞、创建时间-->
+			<view class="data-view">
+				<view class="data-view-left">
+					<view class="data-item">
+						<van-icon name="fire" color="#495060" size="15px" />
+						<view style="font-size:24rpx;margin-left:10rpx" class="text-bold">{{article.visits}}</view>
+					</view>
+					<view class="data-item" style="margin-left:25rpx">
+						<van-icon name="like" color="#495060" size="15px" />
+						<view style="font-size:24rpx;margin-left:10rpx" class="text-bold">{{article.likes}}</view>
+					</view>
+				</view>
+				<view class="data-item">
+					<view style="font-size:24rpx;color:#495060" class="text-bold">{{article.createTime}}</view>
+				</view>
+			</view>
+		</view>
+		<van-divider wx:if="{{isFixed}}"></van-divider>
+	</van-sticky>
+	<!-- 文章内容 -->
+	<view style="background:#f8f8f9;padding:15rpx">
+		<htmltowxml text="{{article.originalContent}}" type="md" highlightStyle="{{style}}" linenums="{{false}}"
+			showLoading="{{false}}" bindWxmlTagATap="wxmlTagATap" imghost=""></htmltowxml>
+	</view>
+	<!-- 免责申明 -->
+	<view class="mzsm-view">
+		<text style="font-weight: bold; font-size: 34rpx;color: #495060;align-self: center;margin-bottom: 20rpx;">13ARCHIVES WARNING</text>
+		<block wx:for="{{warning}}">
+			<text style="font-size: 24rpx;color: #495060;margin-top: 8rpx;letter-spacing: 3rpx;">• {{item}}</text>
+		</block>
+	</view>
+	<!-- 评论区 -->
+	<view class="comment-view">
+		<van-divider contentPosition="center" textColor="#495060" fontSize="18" customStyle="padding:0 30rpx">评论区
+		</van-divider>
+		<!-- <van-divider contentPosition="center"  customStyle="padding-left:30rpx">评论区</van-divider> -->
+		<!-- <view style="display: flex;flex-direction: row;justify-content: center;padding: 30rpx;font-weight: bold;color:#495060 ;font-size: 36rpx;" wx:if="{{isEmpty}}">地狱不空，誓不成佛</view> -->
+		<van-empty wx:if="{{isEmpty}}" image="http://cdn.lingyikz.cn/empty_status_tag.jpg" description="赶紧的！发布第一条评论" />
+		<components-commentItem commentList="{{commentList}}" bind:replyComment="replyComment"></components-commentItem>
+		<!-- <block wx:for="{{commentList}}" wx:if="{{commentList.length>0}}">
+			<view class="comment-item">
+				<image style="width: 80rpx;height: 80rpx;border-radius: 14rpx;" src="{{item.authorUrl}}">
+				</image>
+				<view class="comment-item-r">
+					<view style="display: flex;flex-direction: row;align-items: center;">
+						<view class="comment-author">{{item.author}}</view>
+						<van-tag color="#2F8132" wx:if="{{item.isAdmin}}">管理员</van-tag>
+						<van-tag color="#f2826a" wx:elif="{{item.email != 'fwmeng_vip@163.com'}}">web</van-tag>
+						<van-tag color="#495060" wx:else>小程序</van-tag>
+					</view>
+					<view class="comment-reply" wx:if="{{item.parent !=null}}">回复@{{item.parent.author}}：{{item.parent.content}}
+					</view>
+					<view class="comment-content">{{item.content}}</view>
+					<view class="comment-date">
+						<text style="margin-right: 20rpx;color:#495060;font-size:24rpx;" bindtap="replyComment"
+							data-item="{{item}}">回复</text>
+						<text>{{item.createTime}}</text>
+					</view>
+					<view style="height: 2rpx;background-color: #e9eaec;margin-top: 10rpx;"></view>
+				</view>
+			</view>
+		</block> -->
+	</view>
+	<!-- 发布评论 -->
+	<view style="position: fixed;bottom: 0;width: 100%;background-color: #fff;height: 105rpx;">
+		<van-divider></van-divider>
+		<view style="display: flex;flex-direction: row;align-items: center;height: 105rpx;">
+			<input value="{{inputValue}}" disabled="{{disabled}}" placeholder="{{placeholder}}" confirm-type="send"
+				bindconfirm="commitComment" class="input"></input>
+			<van-icon name="like" size="30px" color="#495060" bindtap="likePost" />
+			<!-- <van-button type="primary" color="#495060" custom-class="commit-btn">发布</van-button> -->
+		</view>
+	</view>
+</view>
+<!-- 回复他人评论弹窗 -->
+<van-popup show="{{ showReplyPopup }}" bind:close="onCloseReplyPopup" round close-on-click-overlay="{{false}}">
+	<view style="padding: 30rpx;">
+		<text style="font-size: 24rpx;color: #495060;">{{replyAuthor}}</text>
+		<text class="comment-reply" style="margin-top: 10rpx;">{{replyContent}}</text>
+		<textarea value="{{textareaValue}}" placeholder="请输入回复的评论" maxlength="200" bindinput="onReplyInput" class="textarea"
+			placeholder-style="color:#80848f"></textarea>
+		<view style="display: flex;flex-direction: row;justify-content: flex-end;">
+			<van-button color="#dddee1" bind:click="onCloseReplyPopup">取消</van-button>
+			<van-button color="#495060" bind:click="replyCommitComment">提交</van-button>
+		</view>
+	</view>
+</van-popup>

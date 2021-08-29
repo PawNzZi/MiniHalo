@@ -1,0 +1,45 @@
+/* components/commentItem/commentItem.wxss */
+.comment-item {
+  display: flex;
+  flex-direction: row;
+  margin: 30rpx 30rpx 0 30rpx;
+}
+
+.comment-item-r {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30rpx;
+  width: 80%;
+  justify-content: space-between;
+}
+
+.comment-author {
+  font-size: 28rpx;
+  color: #495060;
+  margin-right: 20rpx;
+}
+.comment-reply{
+  margin-top: 15rpx;
+  font-size: 22rpx;
+  color: #80848f;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.comment-content {
+  margin-top: 15rpx;
+  font-size: 26rpx;
+  color: #495060;
+}
+
+.comment-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 22rpx;
+  color: #80848f;
+  margin-top: 18rpx;
+  align-items: center;
+}

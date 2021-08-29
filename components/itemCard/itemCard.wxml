@@ -1,0 +1,26 @@
+<!--components/itemCard/itemCard.wxml-->
+<view class="article-view">
+  <block wx:for="{{array}}">
+    <view class="article-item" bindtap="touchItem" data-postid="{{item.id}}">
+      <van-image width="100%" height="180" src="{{item.thumbnail}}" lazy-load	fit="cover" image-class="image-class"/>
+      <view class="article-right">
+        <view class="article-title">{{item.title}}</view>
+        <view class="article-content">{{item.summary}}</view>
+        <view class="article-right-bottom">
+          <view style="font-size:22rpx;color:#515a6e;margin-right:20rpx">{{item.createTime}}</view>
+          <view style="display: flex;flex-direction: row;">
+            <view class="article-hot">
+              <van-icon name="like" color="#495060" size="15px"/>
+              <text style="font-size:22rpx;color:#515a6e">{{item.likes}}</text>
+            </view>
+            <view class="article-hot">
+              <van-icon name="fire" color="#495060" size="15px"/>
+              <text style="font-size:22rpx;color:#515a6e">{{item.visits}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
