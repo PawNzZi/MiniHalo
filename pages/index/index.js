@@ -87,7 +87,8 @@ Page({
   },
   onLoad() {
     this.initData();
- 
+    var naviSize = App.setNavSize();
+    this.setData({naviSize:naviSize})
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']

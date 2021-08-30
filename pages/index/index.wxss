@@ -2,7 +2,7 @@
 .head-background {
   /* position: absolute; */
   margin-top: -104px;
-  height: 600rpx;
+  /* height: 600rpx; */
   border-radius: 20000rpx;
   margin-left: -200rpx;
   margin-right: -200rpx;
@@ -11,16 +11,15 @@
 
 .banner {
   /* position: absolute; */
-  margin-top: -250rpx;
+  margin-top: -320rpx;
   z-index: 100;
   border-radius: 10rpx;
-  margin-left: 10%;
-  margin-right: 10%;
-
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .swiper {
-  height: 300rpx;
+  height: 350rpx;
   border-radius: 19rpx;
   transform: translateY(0);
   overflow: hidden;
@@ -37,7 +36,7 @@
   white-space: nowrap;
 }
 .swiper-item {
-  height: 300rpx;
+  height: 350rpx;
   width: 100%;
   border-radius: 19rpx;
   overflow: hidden;

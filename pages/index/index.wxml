@@ -7,7 +7,7 @@
 	<component-navigationBar backgroundColor="{{bgColor}}" searchColor=""></component-navigationBar>
 	<canvas canvas-id="myCanvas" style="position:fixed;left: 10000rpx"></canvas>
 	<view style="width:100%; overflow: hidden;">
-		<view class="head-background" style="background:{{headBackground}}"></view>
+		<view class="head-background" style="background:{{headBackground}};height: {{naviSize + 300}}px;"></view>
 	</view>
 
 	<view class="banner">
