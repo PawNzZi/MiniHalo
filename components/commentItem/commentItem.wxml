@@ -11,17 +11,22 @@
 						<van-tag color="#495060" wx:else>小程序</van-tag>
 					</view>
           <!-- 管理员才显示 -->
-          <view class="comment-content" wx:if="{{admin}}">《{{item.post.title}}》</view>
-					<view class="comment-reply" wx:if="{{item.parent !=null}}">回复@{{item.parent.author}}：{{item.parent.content}}
-					</view>
+          <view class="comment-content" style="color:#80848f" wx:if="{{admin}}" bindtap="toArticleDetail" data-postid="{{item.post.id}}">发表在《{{item.post.title}}》</view>
+					<!-- <view class="comment-reply" wx:if="{{item.parent !=null}}">回复@{{item.parent.author}}：{{item.parent.content}} -->
+					<!-- </view> -->
 					<view class="comment-content">{{item.content}}</view>
-					<view class="comment-date">
+					<view class="comment-date" wx:if="{{admin}}">
             <text style="margin-right: 20rpx;color:#2F8132;font-size:24rpx;" bindtap="passComment"
-							data-item="{{item}}" wx:if="{{admin}}">通过</text>
+							data-item="{{item}}" wx:if="{{item.status == 'AUDITING'}}">通过</text>
+						<text style="margin-right: 20rpx;color:#495060;font-size:24rpx;" bindtap="replyComment"
+							data-item="{{item}}" wx:elif="{{item.status == 'PUBLISHED'}}">回复</text>
+              <text style="margin-right: 20rpx;color:#AB0125;font-size:24rpx;" bindtap="deleteComment"
+							data-item="{{item}}" wx:if="{{item.status == 'PUBLISHED' || item.status == 'AUDITING'}}">回收站</text>
+						<text>{{item.createTime}}</text>
+					</view>
+					<view class="comment-date" wx:else>
 						<text style="margin-right: 20rpx;color:#495060;font-size:24rpx;" bindtap="replyComment"
 							data-item="{{item}}" >回复</text>
-              <text style="margin-right: 20rpx;color:#AB0125;font-size:24rpx;" bindtap="deleteComment"
-							data-item="{{item}}" wx:if="{{admin}}">删除</text>
 						<text>{{item.createTime}}</text>
 					</view>
 					<view style="height: 2rpx;background-color: #e9eaec;margin-top: 10rpx;"></view>

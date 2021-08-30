@@ -1,0 +1,4 @@
+/* pages/admin/friendLink/friendLink.wxss */
+.van-share-sheet__button{
+  width: 80px !important;
+}

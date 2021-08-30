@@ -30,7 +30,30 @@ function requestPostApi(url, params, sourceObj, successFun) {
 function requestPostJSONApi(url, params, sourceObj, successFun) {
     requestApi(url, params, 'POST', "JSON", sourceObj, successFun)
 }
-
+/**
+ * PUT请求API
+ * @param  {String}   url         接口地址
+ * @param  {Object}   params      请求的参数
+ * @param  {Object}   sourceObj   来源对象
+ * @param  {Function} successFun  接口调用成功返回的回调函数
+ * @param  {Function} failFun     接口调用失败的回调函数
+ * @param  {Function} completeFun 接口调用结束的回调函数(调用成功、失败都会执行)
+ */
+function requestPutJSONApi(url, params, sourceObj, successFun) {
+    requestApi(url, params, 'PUT', "JSON", sourceObj, successFun)
+}
+/**
+ * DELETE请求API
+ * @param  {String}   url         接口地址
+ * @param  {Object}   params      请求的参数
+ * @param  {Object}   sourceObj   来源对象
+ * @param  {Function} successFun  接口调用成功返回的回调函数
+ * @param  {Function} failFun     接口调用失败的回调函数
+ * @param  {Function} completeFun 接口调用结束的回调函数(调用成功、失败都会执行)
+ */
+function requestDeleteApi(url, params, sourceObj, successFun) {
+    requestApi(url, params, 'DELETE', "JSON", sourceObj, successFun)
+}
 /**
  * GET请求API
  * @param  {String}   url         接口地址
@@ -73,6 +96,8 @@ function requestApi(url, params, method, type, sourceObj, successFun) {
         } else {
             contentType = 'application/x-www-form-urlencoded'
         }
+    } else if (method == 'PUT') {
+        contentType = 'application/json'
     } else {
         contentType = 'application/x-www-form-urlencoded'
     }
@@ -88,10 +113,22 @@ function requestApi(url, params, method, type, sourceObj, successFun) {
         success: function (res) {
             // console.log("s");
             // console.log(res)
+            App.hideLoading();
             if (res.data.status == 200) {
                 typeof successFun == 'function' && successFun(res.data, sourceObj);
             } else {
-                App.showToast(res.data.message);
+                if (res.data.message == 'Token 已过期或不存在') {
+                    App.showSinglModalFun(res.data.message, {
+                        success() {
+                            wx.redirectTo({
+                                url: '/pages/admin/adminLogin/adminLogin',
+                            })
+                        }
+                    })
+                } else {
+                    App.showToast(res.data.message);
+                }
+
             }
 
         },
@@ -100,7 +137,7 @@ function requestApi(url, params, method, type, sourceObj, successFun) {
             // typeof failFun == 'function' && failFun(res.data, sourceObj)
         },
         complete: function (res) {
-            App.hideLoading();
+           
             // typeof completeFun == 'function' && completeFun(res.data, sourceObj)
         }
     })
@@ -109,4 +146,6 @@ module.exports = {
     requestPostApi,
     requestGetApi,
     requestPostJSONApi,
+    requestPutJSONApi,
+    requestDeleteApi,
 }

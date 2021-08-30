@@ -7,11 +7,18 @@
     "pages/category/category",
     "pages/tag/tag",
     "pages/admin/adminLogin/adminLogin",
-    "pages/admin/dashBoard/dashBoard"
+    "pages/admin/dashBoard/dashBoard",
+    "pages/admin/comment/comment",
+    "pages/admin/tag/tag",
+    "pages/admin/category/category",
+    "pages/admin/tag/tagDetail/tagDetail",
+    "pages/admin/category/categoryDetail/categoryDetail",
+    "pages/admin/friendLink/friendLink",
+    "pages/admin/friendLink/friendLinkDetail/friendLinkkDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#495060",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
   },

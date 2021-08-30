@@ -70,7 +70,7 @@ App({
   hideLoading: function () {
     setTimeout(function () {
       wx.hideLoading()
-    }, 1500)
+    }, 500)
 
   },
   //有icon有遮罩Toast
@@ -139,6 +139,13 @@ App({
     }
     return shareAppMessage;
   },
+  /**
+   * 封装小程序android分享朋友圈对象
+   * @param {*} title 
+   * @param {*} imageUrl 
+   * @param {*} imagePreviewUrl 
+   * @param {*} path 
+   */
   sharePyqMessage: function (title, imageUrl, imagePreviewUrl, path) {
     var sharePyqMessage = {
       title: title,
@@ -148,22 +155,47 @@ App({
     }
     return sharePyqMessage;
   },
-  getUserInfo:function(handler){
+  /**
+   * 判断用户信息是否存在
+   * @param {*} handler 
+   */
+  getUserInfo: function (handler) {
     var userInfo = wx.getStorageSync('userInfo');
-    if(userInfo){
+    if (userInfo) {
       handler.success(userInfo);
-    }else{
+    } else {
       handler.fail();
     }
   },
-  getAdminInfo:function(handler){
+  /**
+   * 判断管理员信息是否存在
+   * @param {*} handler 
+   */
+  getAdminInfo: function (handler) {
     var admin = wx.getStorageSync('admin');
-    if(admin){
+    if (admin) {
       handler.success(admin);
-    }else{
+    } else {
       wx.redirectTo({
         url: '/pages/admin/adminLogin/adminLogin',
       })
     }
+  },
+  radomColor: function () {
+    this.r = Math.floor(Math.random() * 255);
+    this.g = Math.floor(Math.random() * 255);
+    this.b = Math.floor(Math.random() * 255);
+    var color = 'rgba(' + this.r + ',' + this.g + ',' + this.b + ')';
+    return color;
+  },
+  checkTextIsEmpty: function (text) {
+    var result;
+    if (text) {
+      result = text.replace(/\s+/g, '');
+    } else {
+      result = ''
+    }
+    console.log(result)
+    return result;
   }
 })

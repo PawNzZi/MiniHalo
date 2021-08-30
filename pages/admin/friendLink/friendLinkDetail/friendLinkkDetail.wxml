@@ -1,0 +1,16 @@
+<!--pages/admin/friendLink/friendLinkDetail/friendLinkkDetail.wxml-->
+<van-cell-group custom-class="content-view">
+  <van-field required value="{{ name }}" label="网站名称" placeholder="页面上显示的名称" bind:change="getInputName"/>
+  <van-field required value="{{ url }}" label="网站地址" placeholder="需要加上 http://" border="{{ false }}" bind:change="getInputUrl"/>
+</van-cell-group>
+
+<van-cell-group custom-class="content-view">
+  <van-field value="{{ logo }}" label="logo" placeholder="网站logo" bind:change="getInputLogo"/>
+  <van-field value="{{ team }}" label="分组" placeholder="网站分组" bind:change="getInputTeam"/>
+  <van-field type="number" value="{{ priority }}" label="排序" placeholder="网站排序" bind:change="getInputPrioity"/>
+  <van-field autosize type="textarea" value="{{ description }}" label="描述" placeholder="网站描述" border="{{ false }}" bind:change="getInputDescription"/>
+</van-cell-group>
+<view style="display: flex;flex-direction: column;align-items: center;margin-top: 35rpx;">
+  <van-button color="#495060" bind:click="commitApi">{{btn_text}}</van-button>
+</view>
+

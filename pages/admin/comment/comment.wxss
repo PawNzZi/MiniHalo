@@ -1,0 +1,30 @@
+/* pages/admin/comment/comment.wxss */
+.textarea{
+  margin: 15rpx 0 20rpx 0;
+  background-color: #f8f8f9;
+  /* width: 90%; */
+  border-radius: 9rpx;
+  padding: 15rpx;
+  color: #495060;
+  font-size: 28rpx;
+}
+.commit-btn {
+  width: 150rpx !important;
+  height: 70rpx !important;
+  margin-left: 30rpx !important;
+}
+.comment-reply{
+  margin-top: 15rpx;
+  font-size: 22rpx;
+  color: #80848f;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.van-button{
+  width: 150rpx !important;
+  height: 60rpx !important;
+  margin-left: 30rpx !important;
+}

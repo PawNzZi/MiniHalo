@@ -16,7 +16,7 @@
   color: #323233;
   color: var(--sidebar-text-color, #323233);
   background-color: #f7f8fa;
-  background-color: var(--sidebar-background-color, #f7f8fa)
+  background-color: var(--sidebar-background-color, #f7f8fa);
 }
 
 .van-sidebar-item__text {
@@ -40,17 +40,18 @@
   font-weight: 500;
   font-weight: var(--sidebar-selected-font-weight, 500);
   border-color: #495060;
-  border-color: var(--sidebar-selected-border-color, #495060)
+  border-color: var(--sidebar-selected-border-color, #495060);
 }
 
 .van-sidebar-item--selected:after {
-  border-right-width: 1px
+  border-right-width: 1px;
 }
 
 .van-sidebar-item--selected,
 .van-sidebar-item--selected.van-sidebar-item--hover {
   background-color: #fff;
-  background-color: var(--sidebar-selected-background-color, #fff)
+  background-color: var(--sidebar-selected-background-color, #fff);
+
 }
 
 .van-sidebar-item--disabled {

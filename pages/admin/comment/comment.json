@@ -1,0 +1,12 @@
+{
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "van-empty": "../../../dist/empty/index",
+    "van-divider": "../../../dist/divider/index",
+    "van-popup": "../../../dist/popup/index",
+    "van-button": "../../../dist/button/index",
+    "component-commentItem": "../../../components/commentItem/commentItem",
+    "component-navigationBar": "../../../components/navigationBar/navigationBar"
+  }
+}

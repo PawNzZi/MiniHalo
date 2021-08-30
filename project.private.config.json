@@ -73,6 +73,24 @@
           "pathName": "pages/admin/dashBoard/dashBoard",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/admin/comment/comment",
+          "pathName": "pages/admin/comment/comment",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/admin/tag/tag",
+          "pathName": "pages/admin/tag/tag",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/admin/tag/tagDetail/tagDetail",
+          "pathName": "pages/admin/tag/tagDetail/tagDetail",
+          "query": "index=0",
+          "scene": null
         }
       ]
     }

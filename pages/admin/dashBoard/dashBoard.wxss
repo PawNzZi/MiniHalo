@@ -26,7 +26,7 @@
 }
 
 .contain-bg {
-  background-color: brown;
+
   border-radius: 10rpx;
   width: 300rpx;
   height: 150rpx;

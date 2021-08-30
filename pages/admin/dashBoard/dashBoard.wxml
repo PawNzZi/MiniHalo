@@ -9,10 +9,12 @@
       </view>
     </view>
     <view class="contain-item">
-      <view class="contain-bg" style="background-color:rgb(31, 132, 150);">
-        <view class="title">评论总数</view>
-        <view class="count">{{object.commentCount}}</view>
-      </view>
+      <navigator url="/pages/admin/comment/comment" hover-class="none">
+        <view class="contain-bg" style="background-color:rgb(31, 132, 150);">
+          <view class="title">评论总数</view>
+          <view class="count">{{object.commentCount}}</view>
+        </view>
+      </navigator>
     </view>
     <view class="contain-item">
       <view class="contain-bg" style="background-color:rgb(173, 53, 37)">
@@ -33,35 +35,42 @@
       </view>
     </view>
     <view class="contain-item">
-      <view class="contain-bg" style="background-color:rgb(161, 26, 94);">
-        <view class="title">标签总数</view>
-        <view class="count">{{object.tagCount}}</view>
-      </view>
+      <navigator url="/pages/admin/tag/tag" hover-class="none">
+        <view class="contain-bg" style="background-color:rgb(161, 26, 94);">
+          <view class="title">标签总数</view>
+          <view class="count">{{object.tagCount}}</view>
+        </view>
+      </navigator>
     </view>
     <view class="contain-item">
-      <view class="contain-bg" style="background-color:rgb(35, 173, 97);">
-        <view class="title">分类总数</view>
-        <view class="count">{{object.categoryCount}}</view>
-      </view>
+      <navigator url="/pages/admin/category/category" hover-class="none">
+        <view class="contain-bg" style="background-color:rgb(35, 173, 97);">
+          <view class="title">分类总数</view>
+          <view class="count">{{object.categoryCount}}</view>
+        </view>
+      </navigator>
+
     </view>
     <view class="contain-item">
+      <navigator url="/pages/admin/friendLink/friendLink" hover-class="none">
       <view class="contain-bg" style="background-color:rgb(160, 45, 170);">
         <view class="title">友链总数</view>
         <view class="count">{{object.linkCount}}</view>
       </view>
+    </navigator>
     </view>
   </view>
   <!-- 最近文章，评论和操作记录 -->
   <view class="last-view">
     <van-sticky offset-top="{{ 0 }}">
-    <view class="last-title">
-      <text class="{{tag == 0?'select-title':'normal-title'}}" bindtap="selectTitle" data-tag="0">最近文章</text>
-      <text class="{{tag == 1?'select-title':'normal-title'}}" bindtap="selectTitle" data-tag="1">最近评论</text>
-      <text class="{{tag == 2?'select-title':'normal-title'}}" bindtap="selectTitle" data-tag="2">最近操作</text>
-    </view>
+      <view class="last-title">
+        <text class="{{tag == 0?'select-title':'normal-title'}}" bindtap="selectTitle" data-tag="0">最近文章</text>
+        <text class="{{tag == 1?'select-title':'normal-title'}}" bindtap="selectTitle" data-tag="1">最近评论</text>
+        <text class="{{tag == 2?'select-title':'normal-title'}}" bindtap="selectTitle" data-tag="2">最近操作</text>
+      </view>
     </van-sticky>
     <view class="last-item">
-    <!-- 最近文章列表 -->
+      <!-- 最近文章列表 -->
       <block wx:if="{{tag == 0}}" wx:for="{{postList}}">
         <view class="post-item" bindtap="toArticleDetail" data-postid="{{item.id}}">
           <text style="font-size: 26rpx;color: #495060;">{{item.title}}</text>
@@ -71,12 +80,14 @@
       </block>
       <!-- 最近评论列表 -->
       <block wx:if="{{tag == 1}}" wx:for="{{commentList}}">
-        <view style="display: flex;flex-direction: row;padding: 30rpx;" bindtap="toArticleDetail" data-postid="{{item.post.id}}">
+        <view style="display: flex;flex-direction: row;padding: 30rpx;" bindtap="toArticleDetail"
+          data-postid="{{item.post.id}}">
           <view style="display: flex;flex-direction: column;align-items: center;margin-right: 30rpx;">
-            <image style="width: 80rpx;height: 80rpx;border-radius: 14rpx;" src="{{item.email != 'fwmeng_vip@163.com' ? item.avatar:item.authorUrl}}"></image>
+            <image style="width: 80rpx;height: 80rpx;border-radius: 14rpx;"
+              src="{{item.email != 'fwmeng_vip@163.com' ? item.avatar:item.authorUrl}}"></image>
             <van-tag color="#2F8132" wx:if="{{item.isAdmin}}">管理员</van-tag>
-						<van-tag color="#f2826a" wx:elif="{{item.email != 'fwmeng_vip@163.com'}}">web</van-tag>
-						<van-tag color="#495060" wx:else>小程序</van-tag>
+            <van-tag color="#f2826a" wx:elif="{{item.email != 'fwmeng_vip@163.com'}}">web</van-tag>
+            <van-tag color="#495060" wx:else>小程序</van-tag>
           </view>
           <view style="display: flex;flex-direction: column;width: 100%;">
             <text style="font-size: 26rpx;color: #80848f;">{{item.author}} 发表在 《{{item.post.title}}》</text>

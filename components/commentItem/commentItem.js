@@ -24,6 +24,13 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    toArticleDetail:function(e){
+      console.log("xxx")
+      var postId = e.currentTarget.dataset.postid;
+      wx.navigateTo({
+        url: '/pages/article/article?postId='+postId,
+      })
+    },
     passComment:function(e){
       var item = e.currentTarget.dataset.item;
       this.triggerEvent("passComment", {

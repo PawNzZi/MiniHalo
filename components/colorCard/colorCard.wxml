@@ -1,0 +1,10 @@
+<!--components/colorCard/colorCard.wxml-->
+<view class="contain-view">
+  <block wx:for="{{colorList}}">
+    <view class="contain-item">
+      <view class="contain-bg" style="background-color:{{item.color}}" bindtap="clickItem" data-item="{{item}}">
+        <view class="count">{{item.name}}</view>
+      </view>
+    </view>
+  </block>
+</view>

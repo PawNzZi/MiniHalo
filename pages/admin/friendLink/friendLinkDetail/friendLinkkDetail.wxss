@@ -1,0 +1,6 @@
+/* pages/admin/friendLink/friendLinkDetail/friendLinkkDetail.wxss */
+.content-view{
+  margin-top: 25rpx;
+  align-items: center;
+  width: 100%;
+}

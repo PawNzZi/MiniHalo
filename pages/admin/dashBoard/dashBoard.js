@@ -89,7 +89,12 @@ Page({
     for(var i = 0;i<array.length;i++){
       //将时间戳转换为日期
       array[i].createTime = time.customFormatTime(array[i].createTime, 'Y-M-D  h:m:s');
+      if (array[i].isAdmin) {
+        array[i].email = '';
+        array[i].authorUrl = 'http://cdn.lingyikz.cn/logo.jpg';
+      } 
     }
+    
     obj.setData({logList:array})
   },
   toArticleDetail:function(e){
@@ -158,10 +163,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

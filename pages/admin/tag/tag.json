@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "Tag",
+  "navigationBarBackgroundColor": "#495060",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "component-colorCard":"../../../components/colorCard/colorCard",
+    "van-share-sheet": "../../../dist/share-sheet/index"
+  }
+}

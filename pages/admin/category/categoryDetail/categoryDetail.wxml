@@ -1,0 +1,13 @@
+<!--pages/admin/category/categoryDetail/categoryDetail.wxml-->
+<van-cell-group custom-class="content-view">
+  <van-field required value="{{ name }}" label="名称" placeholder="页面上显示的名称" bind:change="getInputName"/>
+  <van-field value="{{ slug }}" label="别名" placeholder="一般为单个标签页面的标识，最好为英文" border="{{ false }}" bind:change="getInputSlug"/>
+</van-cell-group>
+
+<van-cell-group custom-class="content-view">
+  <van-field required value="{{ password }}" label="密码" placeholder="分类密码" bind:change="getInputPassword"/>
+  <van-field value="{{ description }}" label="描述" placeholder="分类描述" border="{{ false }}" bind:change="getInputDescription"/>
+</van-cell-group>
+<view style="display: flex;flex-direction: column;align-items: center;margin-top: 35rpx;">
+  <van-button color="#495060" bind:click="commitApi">{{btn_text}}</van-button>
+</view>
