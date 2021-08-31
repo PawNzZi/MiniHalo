@@ -1,0 +1,4 @@
+/* pages/admin/attachment/attachment.wxss */
+.van-share-sheet__button{
+  width: 80px !important;
+}

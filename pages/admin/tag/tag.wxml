@@ -1,3 +1,4 @@
 <!--pages/admin/tag/tag.wxml-->
+<page-meta page-style="{{ showShare ? 'overflow: hidden;' : '' }}" />
 <component-colorCard colorList="{{colorList}}" bind:click="clickItem"></component-colorCard>
 <van-share-sheet show="{{ showShare }}" options="{{ options }}" bind:select="onSelect" bind:close="onClose" />

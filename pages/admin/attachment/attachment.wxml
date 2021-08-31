@@ -1,4 +1,5 @@
-<!--pages/admin/category/category.wxml-->
+<!--pages/admin/attachment/attachment.wxml-->
 <page-meta page-style="{{ showShare ? 'overflow: hidden;' : '' }}" />
-<component-colorCard colorList="{{colorList}}" bind:click="clickItem"></component-colorCard>
+<component-attachment array="{{attachmentList}}" bind:click="clickItem"></component-attachment>
 <van-share-sheet show="{{ showShare }}" options="{{ options }}" bind:select="onSelect" bind:close="onClose" />
+ 

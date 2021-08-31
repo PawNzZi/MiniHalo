@@ -181,6 +181,9 @@ App({
       })
     }
   },
+  /**
+   * 随机颜色
+   */
   radomColor: function () {
     this.r = Math.floor(Math.random() * 192);
     this.g = Math.floor(Math.random() * 192);
@@ -188,6 +191,10 @@ App({
     var color = 'rgba(' + this.r + ',' + this.g + ',' + this.b + ')';
     return color;
   },
+  /**
+   * 判断内容是否为空
+   * @param {*} text 
+   */
   checkTextIsEmpty: function (text) {
     var result;
     if (text) {
@@ -197,5 +204,51 @@ App({
     }
     console.log(result)
     return result;
-  }
+  },
+  /**
+   * 上传图片
+   */
+  uploadThumb: function (handler) {
+    // console.log("上传图片")
+    var _this = this;
+    _this.showModal('确定上传图片', {
+      success() {
+        _this.getAdminInfo({
+          success(admin) {
+            wx.chooseImage({
+              success(res) {
+                _this.showLoading("Loading");
+                const tempFilePaths = res.tempFilePaths
+                wx.uploadFile({
+                  url: 'https://13archives.lingyikz.cn/api/admin/attachments/upload', 
+                  filePath: tempFilePaths[0],
+                  name: 'file',
+                  header: {
+                    'admin-authorization': admin.access_token
+                  },
+                  success(result) {
+                    if (result.errMsg == 'uploadFile:ok') {
+                      var data = result.data;
+                      data = JSON.parse(data);
+                      if (data.status == 200) {
+                        _this.hideLoading();
+                        handler.success(data.data);
+                      } else {
+                        _this.showToast(data.message);
+                      }
+                    } else {
+                      _this.showToast("上传失败")
+                    }
+                  },
+                  fail() {
+                    _this.showToast("上传失败")
+                  },
+                })
+              }
+            })
+          }
+        })
+      }
+    })
+  },
 })

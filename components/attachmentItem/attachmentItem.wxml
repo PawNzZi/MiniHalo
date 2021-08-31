@@ -1,0 +1,9 @@
+<!--components/attachmentItem/attachmentItem.wxml-->
+<view class="contain-view">
+  <block wx:for="{{array}}">
+    <view class="contain-item">
+      <image class="contain-bg" src="{{item.thumbPath}}" bindtap="clickItem" data-item="{{item}}">
+      </image>
+    </view>
+  </block>
+</view>

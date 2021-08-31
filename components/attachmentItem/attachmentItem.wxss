@@ -1,0 +1,26 @@
+/* components/attachmentItem/attachmentItem.wxss */
+.contain-view {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 60rpx;
+  padding-bottom: 30rpx;
+}
+
+.contain-item {
+  margin-top: 30rpx;
+  
+}
+.contain-item::after {
+  flex: 1;
+}
+.contain-bg {
+  border-radius: 10rpx;
+  width: 300rpx;
+  height: 150rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

@@ -61,6 +61,22 @@
       </view>
     </navigator>
     </view>
+    <view class="contain-item">
+      <navigator hover-class="none">
+      <view class="contain-bg" style="background-color:rgb(170, 162, 45);">
+        <view class="title">日志总数</view>
+        <view class="count">{{object.journalCount}}</view>
+      </view>
+    </navigator>
+    </view>
+    <view class="contain-item">
+      <navigator url="/pages/admin/attachment/attachment" hover-class="none">
+      <view class="contain-bg" style="background-color:rgb(150, 28, 28);">
+        <view class="title">附件管理</view>
+        <view class="count">附件</view>
+      </view>
+    </navigator>
+    </view>
   </view>
   <!-- 最近文章，评论和操作记录 -->
   <view class="last-view">

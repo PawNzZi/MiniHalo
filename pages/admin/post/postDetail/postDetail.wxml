@@ -70,7 +70,7 @@
     <!-- 封面图 -->
     <view class="article-set">
       <text class="set-title">封面图:</text>
-      <van-image width="95%" height="350rpx" src="{{thumb}}" image-class="thumb"/>
+      <van-image width="95%" height="350rpx" src="{{thumb}}" image-class="thumb" bindtap="uploadThumb"/>
       <!-- <van-field input-class="slug-view" border="{{false}}" value="{{ thumb }}" placeholder="http(s)://"
         bind:change="getInputThumb" /> -->
       <input class="slug-view" value="{{ thumb }}" placeholder="http(s)://" bindinput="getInputThumb"/>

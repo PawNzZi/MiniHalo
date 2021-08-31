@@ -16,7 +16,8 @@
     "pages/admin/friendLink/friendLink",
     "pages/admin/friendLink/friendLinkDetail/friendLinkkDetail",
     "pages/admin/post/post",
-    "pages/admin/post/postDetail/postDetail"
+    "pages/admin/post/postDetail/postDetail",
+    "pages/admin/attachment/attachment"
   ],
   "window": {
     "backgroundTextStyle": "light",

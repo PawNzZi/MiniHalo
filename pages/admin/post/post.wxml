@@ -1,4 +1,5 @@
 <!--pages/admin/post/post.wxml-->
+<page-meta page-style="{{ showShare ? 'overflow: hidden;' : '' }}" />
 <component-navigationBar type="{{3}}" backgroundColor="#fff" searchColor="" disabled="{{false}}"
 	bind:onSearch="onSearch" optionArray="{{optionArray}}" bind:clearKeyWord="clearKeyWord"  bind:dropdownChange="dropdownChange">
 </component-navigationBar>
