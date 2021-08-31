@@ -1,0 +1,14 @@
+{
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-field": "../../../../dist/field/index",
+    "van-cell-group": "../../../../dist/cell-group/index",
+    "van-button": "../../../../dist/button/index",
+    "van-popup": "../../../../dist/popup/index",
+    "van-divider": "../../../../dist/divider/index",
+    "van-switch": "../../../../dist/switch/index",
+    "van-checkbox": "../../../../dist/checkbox/index",
+    "van-checkbox-group": "../../../../dist/checkbox-group/index",
+    "van-image": "../../../../dist/image/index"
+  }
+}

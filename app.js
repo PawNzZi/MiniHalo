@@ -182,9 +182,9 @@ App({
     }
   },
   radomColor: function () {
-    this.r = Math.floor(Math.random() * 255);
-    this.g = Math.floor(Math.random() * 255);
-    this.b = Math.floor(Math.random() * 255);
+    this.r = Math.floor(Math.random() * 192);
+    this.g = Math.floor(Math.random() * 192);
+    this.b = Math.floor(Math.random() * 192);
     var color = 'rgba(' + this.r + ',' + this.g + ',' + this.b + ')';
     return color;
   },

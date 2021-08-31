@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "van-empty": "../../../dist/empty/index",
+    "van-divider": "../../../dist/divider/index",
+    "van-share-sheet": "../../../dist/share-sheet/index",
+    "component-itemCard": "../../../components/itemCard/itemCard",
+    "component-navigationBar": "../../../components/navigationBar/navigationBar"
+  } 
+}

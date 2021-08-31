@@ -1,0 +1,85 @@
+<!--pages/admin/post/postDetail/postDetail.wxml-->
+
+
+<van-cell-group custom-class="content-view">
+  <van-field required value="{{ title }}" label="文章标题" placeholder="页面上显示的标题" bind:change="getInputTitle" />
+  <view class="textarea-view">
+    <textarea class="textarea" maxlength="-1" value="{{ content }}" placeholder="文章内容" bindinput="getInputContent"
+      placeholder-style="color:#80848f"></textarea>
+  </view>
+</van-cell-group>
+<view style="display: flex;flex-direction: column;align-items: center;margin-top: 35rpx;">
+  <van-button color="#495060" bind:click="sureBtn">发布</van-button>
+</view>
+
+<van-popup custom-class="van-popup" show="{{ showPopup }}" position="right" custom-style="width: 80%;height:100%"
+  bind:close="onClosePopup">
+  <view class="popup-view">
+    <text style="margin: 25rpx 0 0 40rpx;">文章设置</text>
+    <van-divider></van-divider>
+    <!-- 文章别名 -->
+    <view class="article-set">
+      <text class="set-title">文章别名:</text>
+      <!-- <van-field input-class="slug-view" border="{{false}}" value="{{ slug }}" placeholder="https://xxx.xxx.xxx/archives/{slug}"
+        bind:change="getInputSlug" /> -->
+        <input class="slug-view" value="{{ slug }}" placeholder="https://xxx.xxx.xxx/archives/{slug}" bindinput="getInputSlug"/>
+    </view>
+    <!-- 开启评论 -->
+    <view class="article-set">
+      <text class="set-title">开启评论:</text>
+      <van-switch active-color="#495060" size="24px" checked="{{ commentChecked }}" bind:change="onCommentChange" />
+    </view>
+    <!-- 是否置顶 -->
+    <view class="article-set">
+      <text class="set-title">是否置顶:</text>
+      <van-switch active-color="#495060" size="24px" checked="{{ topChecked }}" bind:change="onTopChange" />
+      <van-divider></van-divider>
+    </view>
+
+    <!-- 分类 -->
+    <view class="article-set">
+      <text class="set-title">分类:</text>
+      <van-checkbox-group value="{{ categoryIds }}" bind:change="onCategoryChange">
+        <block wx:for="{{categoryList}}">
+          <van-checkbox checked-color="#495060" name="{{item.id}}" shape="square" custom-class="checkboxes">
+            {{item.name}}
+          </van-checkbox>
+        </block>
+      </van-checkbox-group>
+      <van-divider></van-divider>
+    </view>
+
+    <!-- 标签 -->
+    <view class="article-set">
+      <text class="set-title">标签:</text>
+      <van-checkbox-group value="{{ tagIds }}" bind:change="onTagChange">
+        <block wx:for="{{tagList}}">
+          <van-checkbox checked-color="#495060" name="{{item.id}}" shape="square" custom-class="checkboxes">
+            {{item.name}}
+          </van-checkbox>
+        </block>
+      </van-checkbox-group>
+      <van-divider></van-divider>
+    </view>
+    <!-- 摘要 -->
+    <view class="article-set">
+      <text class="set-title">摘要:</text>
+      <textarea class="zhaiyao-textarea" value="{{zhaiyaoValue}}" bindinput="getInputZhaiyao"></textarea>
+      <van-divider></van-divider>
+    </view>
+    <!-- 封面图 -->
+    <view class="article-set">
+      <text class="set-title">封面图:</text>
+      <van-image width="95%" height="350rpx" src="{{thumb}}" image-class="thumb"/>
+      <!-- <van-field input-class="slug-view" border="{{false}}" value="{{ thumb }}" placeholder="http(s)://"
+        bind:change="getInputThumb" /> -->
+      <input class="slug-view" value="{{ thumb }}" placeholder="http(s)://" bindinput="getInputThumb"/>
+      <van-divider></van-divider>
+    </view>
+
+    <view class="bottom-btn">
+      <van-button color="#a30022" bind:click="save" custom-class="b-btn">保存草稿</van-button>
+      <van-button color="#495060" bind:click="publish" custom-class="b-btn">发布文章</van-button>
+    </view>
+  </view>
+</van-popup>

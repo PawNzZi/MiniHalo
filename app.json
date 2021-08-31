@@ -14,7 +14,9 @@
     "pages/admin/tag/tagDetail/tagDetail",
     "pages/admin/category/categoryDetail/categoryDetail",
     "pages/admin/friendLink/friendLink",
-    "pages/admin/friendLink/friendLinkDetail/friendLinkkDetail"
+    "pages/admin/friendLink/friendLinkDetail/friendLinkkDetail",
+    "pages/admin/post/post",
+    "pages/admin/post/postDetail/postDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

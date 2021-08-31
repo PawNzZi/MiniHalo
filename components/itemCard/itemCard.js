@@ -7,7 +7,10 @@ Component({
      array:{
        type:Array
      },
-
+     admin:{
+       type:Boolean,
+       value:false
+     }
   },
 
   /**
@@ -22,11 +25,17 @@ Component({
    */
   methods: {
     touchItem:function(e){
-      var postId = e.currentTarget.dataset.postid;
-      console.log("post:"+postId)
-      wx.navigateTo({
-        url: '/pages/article/article?postId='+postId,
-      })
+      var item = e.currentTarget.dataset.item;
+      if(this.properties.admin){
+        this.triggerEvent('touchItem',{item});
+      }else{
+        console.log(item)
+        wx.navigateTo({
+          url: '/pages/article/article?postId='+item.id,
+        })
+      }
+      
+     
     }
   }
 })

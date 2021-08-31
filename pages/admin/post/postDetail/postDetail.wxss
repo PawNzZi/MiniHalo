@@ -1,0 +1,71 @@
+/* pages/admin/post/postDetail/postDetail.wxss */
+.content-view{
+  margin-top: 25rpx;
+  align-items: center;
+  width: 100%;
+}
+.textarea-view{
+  margin-top: 20rpx;
+  background-color: #fff;
+  padding: 20rpx 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.textarea{
+  width: 90%;
+  height: 800rpx;
+  padding: 20rpx;
+  border-radius: 9rpx;
+  background-color: #f8f8f9;
+  color: #495060;
+  font-size: 28rpx;
+}
+.popup-view{
+  display: flex;
+  flex-direction: column;
+}
+.article-set{
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 25rpx 40rpx ;
+}
+.set-title{
+  font-size: 28rpx;
+  color: #495060;
+  margin-bottom: 15rpx;
+}
+.slug-view{
+  border:1rpx solid #dddee1 !important;
+  border-radius: 9rpx;
+  height: 60rpx !important;
+  margin-right: 30rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+}
+.thumb{
+  border-radius: 9rpx !important;
+}
+.zhaiyao-textarea{
+  width: 90%;
+  padding: 20rpx;
+  border-radius: 9rpx;
+  background-color: #f8f8f9;
+  color: #495060;
+  font-size: 28rpx;
+}
+.checkboxes{
+  margin-top: 10rpx !important;
+  margin-left: 30rpx !important;
+  color: #495060 !important;
+  font-size: 28rpx;
+}
+.bottom-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 30rpx 30rpx 30rpx;
+}
+.b-btn{
+  width: 200rpx !important;
+}

@@ -3,10 +3,12 @@
   <!-- 计数总览 -->
   <view class="contain-view">
     <view class="contain-item">
+      <navigator url="/pages/admin/post/post" hover-class="none">
       <view class="contain-bg" style="background-color: rgb(155, 106, 43);">
         <view class="title">文章总数</view>
         <view class="count">{{object.postCount}}</view>
       </view>
+      </navigator>
     </view>
     <view class="contain-item">
       <navigator url="/pages/admin/comment/comment" hover-class="none">
