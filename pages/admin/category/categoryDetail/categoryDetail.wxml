@@ -5,7 +5,7 @@
 </van-cell-group>
 
 <van-cell-group custom-class="content-view">
-  <van-field required value="{{ password }}" label="密码" placeholder="分类密码" bind:change="getInputPassword"/>
+  <van-field value="{{ password }}" label="密码" placeholder="分类密码" bind:change="getInputPassword"/>
   <van-field value="{{ description }}" label="描述" placeholder="分类描述" border="{{ false }}" bind:change="getInputDescription"/>
 </van-cell-group>
 <view style="display: flex;flex-direction: column;align-items: center;margin-top: 35rpx;">

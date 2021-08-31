@@ -19,19 +19,19 @@ Page({
     showShare: false,
     options: [{
         name: '新增文章',
-        icon: 'https://img.yzcdn.cn/vant/custom-icon-fire.png',
+        icon: 'http://cdn.lingyikz.cn/add.png',
       },
       {
         name: '更新文章',
-        icon: 'https://img.yzcdn.cn/vant/custom-icon-light.png',
+        icon: 'http://cdn.lingyikz.cn/update.png',
       },
       {
         name: '删除文章',
-        icon: 'https://img.yzcdn.cn/vant/custom-icon-water.png',
+        icon: 'http://cdn.lingyikz.cn/delete.png',
       },
       {
         name: '查看文章',
-        icon: 'https://img.yzcdn.cn/vant/custom-icon-water.png',
+        icon: 'http://cdn.lingyikz.cn/detail.png',
       },
     ],
   },
