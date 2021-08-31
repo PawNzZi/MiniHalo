@@ -8,7 +8,9 @@ Page({
    */
   data: {
     attachmentList: [],
+    keyword:'',
     showShare: false,
+    isEmpty:false,
     options: [{
         name: '上传图片',
         icon: 'http://cdn.lingyikz.cn/add.png',
@@ -56,9 +58,10 @@ Page({
             var attachmentList = _this.data.attachmentList;
             attachmentList.length = 0;
             _this.setData({
-              attachmentList: attachmentList
+              attachmentList: attachmentList,
+              page:0
             });
-            _this.attachmentList(0)
+            _this.getAttachmentList('',0)
           }, 1000);
 
         }
@@ -98,8 +101,9 @@ Page({
       attachmentList.length = 0;
       obj.setData({
         attachmentList: attachmentList,
+        page:0
       });
-      obj.attachmentList(0)
+      obj.getAttachmentList('',0)
     }, 1000);
     // obj.attachmentList(0)
   },
@@ -107,8 +111,9 @@ Page({
    * 获取附件Api
    * @param {*} page 
    */
-  attachmentList: function (page) {
+  getAttachmentList: function (keyword,page) {
     var data = {};
+    data.keyword = keyword;
     data.page = page;
     data.size = 15;
     data.sort = 'createTime,desc';
@@ -126,14 +131,28 @@ Page({
     obj.setData({
       attachmentList: attachmentList,
       hasNext: res.data.hasNext,
-      page: res.data.page
+      page: res.data.page,
+      isEmpty:res.data.isEmpty
     })
+  },
+  onSearch:function(e){
+     console.log(e);
+     var keyword = e.detail.event;
+     var attachmentList = this.data.attachmentList;
+     attachmentList.length = 0;
+     this.setData({attachmentList:attachmentList,page:0})
+     this.getAttachmentList(keyword,0);
+  },
+  clearKeyWord:function(){
+    this.setData({keyword:''});
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.attachmentList(0);
+    this.getAttachmentList('',0);
+    var naviSize = App.setNavSize();
+    this.setData({naviSize:naviSize})
   },
 
   /**
@@ -178,7 +197,8 @@ Page({
     var hasNext = this.data.hasNext;
     if (hasNext) {
       var page = this.data.page;
-      this.attachmentList(page + 1);
+      var keyword = this.data.keyword
+      this.getAttachmentList(keyword ,page + 1);
     } else {
       App.showToast("别拉了，拉完了")
     }

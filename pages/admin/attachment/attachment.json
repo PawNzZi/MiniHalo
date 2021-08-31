@@ -2,8 +2,11 @@
   "navigationBarTitleText": "Attachment",
   "navigationBarBackgroundColor": "#495060",
   "navigationBarTextStyle": "white",
+  "navigationStyle": "custom",
   "usingComponents": {
     "component-attachment":"../../../components/attachmentItem/attachmentItem",
-    "van-share-sheet": "../../../dist/share-sheet/index"
+    "van-share-sheet": "../../../dist/share-sheet/index",
+    "van-empty": "../../../dist/empty/index",
+    "component-navigationBar": "../../../components/navigationBar/navigationBar"
   }
 }

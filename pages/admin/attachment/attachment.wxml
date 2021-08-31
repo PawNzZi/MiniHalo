@@ -1,5 +1,13 @@
 <!--pages/admin/attachment/attachment.wxml-->
+
 <page-meta page-style="{{ showShare ? 'overflow: hidden;' : '' }}" />
-<component-attachment array="{{attachmentList}}" bind:click="clickItem"></component-attachment>
+<component-navigationBar type="4" backgroundColor="#495060" searchColor="" disabled="{{false}}"
+	bind:onSearch="onSearch" bind:clearKeyWord="clearKeyWord" >
+</component-navigationBar>
+<view style="margin-top: {{naviSize}}px;">
+  <component-attachment array="{{attachmentList}}" bind:click="clickItem" ></component-attachment>
+</view>
+<van-empty wx:if="{{isEmpty}}" image="http://cdn.lingyikz.cn/empty_status_tag.jpg"
+		description="骚瑞！什么都没有" />
 <van-share-sheet show="{{ showShare }}" options="{{ options }}" bind:select="onSelect" bind:close="onClose" />
  

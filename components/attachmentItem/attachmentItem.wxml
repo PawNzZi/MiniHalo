@@ -2,8 +2,8 @@
 <view class="contain-view">
   <block wx:for="{{array}}">
     <view class="contain-item">
-      <image class="contain-bg" src="{{item.thumbPath}}" bindtap="clickItem" data-item="{{item}}">
-      </image>
+      <van-image lazy-load custom-class="contain-bg" src="{{item.thumbPath}}" bindtap="clickItem" data-item="{{item}}">
+      </van-image>
     </view>
   </block>
 </view>
