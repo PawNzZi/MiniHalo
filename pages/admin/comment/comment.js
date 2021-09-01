@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+
     commentList: [],
     keyword: '',
     showReplyPopup: false,
@@ -217,7 +218,7 @@ Page({
   onCloseReplyPopup: function () {
     this.setData({
       showReplyPopup: false,
-      textareaValue: ''
+      textareaValue: '',
     });
   },
   /**

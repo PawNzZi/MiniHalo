@@ -4,7 +4,7 @@
 <van-cell-group custom-class="content-view">
   <van-field required value="{{ title }}" label="文章标题" placeholder="页面上显示的标题" bind:change="getInputTitle" />
   <view class="textarea-view">
-    <textarea class="textarea" maxlength="-1" value="{{ content }}" placeholder="文章内容" bindinput="getInputContent"
+    <textarea class="textarea" confirm-type="done" show-confirm-bar="{{false}}" maxlength="-1" value="{{ content }}" placeholder="文章内容" bindinput="getInputContent"
       placeholder-style="color:#80848f"></textarea>
   </view>
 </van-cell-group>
@@ -64,7 +64,7 @@
     <!-- 摘要 -->
     <view class="article-set">
       <text class="set-title">摘要:</text>
-      <textarea class="zhaiyao-textarea" value="{{zhaiyaoValue}}" bindinput="getInputZhaiyao"></textarea>
+      <textarea class="zhaiyao-textarea" confirm-type="done" show-confirm-bar="{{false}}" value="{{zhaiyaoValue}}" bindinput="getInputZhaiyao"></textarea>
       <van-divider></van-divider>
     </view>
     <!-- 封面图 -->

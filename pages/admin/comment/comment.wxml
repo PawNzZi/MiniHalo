@@ -9,13 +9,13 @@
   <component-commentItem admin commentList="{{commentList}}" bind:replyComment="replyComment"
     bind:passComment="passComment" bind:deleteComment="deleteComment"></component-commentItem>
 </view>
-<!-- 回复他人评论弹窗 -->
+<!-- 回复他人评论弹窗 --> 
 <van-popup show="{{ showReplyPopup }}" bind:close="onCloseReplyPopup" round close-on-click-overlay="{{false}}">
 	<view style="padding: 30rpx;">
 		<text style="font-size: 24rpx;color: #495060;" >回复@{{replyCommentItem.author}}：发表在《{{replyCommentItem.post.title}}》</text>
 		<text class="comment-reply" style="margin-top: 10rpx;">{{replyCommentItem.content}}</text>
 		<textarea value="{{textareaValue}}" placeholder="请输入回复的评论" maxlength="200" bindinput="onReplyInput" class="textarea"
-			placeholder-style="color:#80848f"></textarea>
+			placeholder-style="color:#80848f" show-confirm-bar="{{false}}" confirm-type="done"></textarea>
 		<view style="display: flex;flex-direction: row;justify-content: flex-end;">
 			<van-button color="#dddee1" bind:click="onCloseReplyPopup">取消</van-button>
 			<van-button color="#495060" bind:click="replyCommitComment">提交</van-button>
