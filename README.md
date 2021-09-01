@@ -78,5 +78,5 @@ onShareTimeline:function(){
 - [vant-weapp](https://github.com/youzan/vant-weapp " vant-weapp") ：轻量、可靠的小程序 UI 组件库。
 - [html2wxml](https://github.com/qwqoffice/html2wxml "html2wxml") ：用于微信小程序的HTML和Markdown格式的富文本渲染组件，支持代码高亮
 - [mini-add-tips](https://github.com/MakerGYT/mini-add-tips "mini-add-tips") ：用于提示用户首次进入小程序时，点击右上角菜单进行【添加到我的小程序】操作
-
+- [wxTimer](https://github.com/baqihg/wxTimer "wxTimer") ：微信小程序中的定时器（用于倒计时）
 

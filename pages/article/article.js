@@ -1,19 +1,52 @@
 // pages/article/article.js
+/**
+ * 由于服务器配置问题，对点赞和评论采取限制操作：在一定的时间内不能评论
+ * 采用的解决方案是倒计时，和接收验证码一个道理，但是针对性的加强了，
+ * 一般接收验证码倒计时时，返回上一页再进入又可以点击了。本方案是一直倒计时结束为止，除非删除小程序再进入
+ * 用了github上的个开源项目，为了实现上面说的，业务有点绕
+ * 现整理逻辑如下
+ * 点赞：
+ * 1.在app.js中配置一个全局变量
+ * 2.点赞前现判断全局变量中是否存有该文章的点赞计时器id
+ *  2.1如果有，说明正在倒计时，友情提示不允许点赞
+ *  2.2如果没有，则调用Api
+ * 3.回调函数中，创建一个计时器，并启动
+ *  3.1倒计时开始，将当前文章id和计时器id存入当前全局变量中
+ *  3.2倒计时结束后从全局变量中清除刚刚存入的数据
+ * 评论：
+ * 1.在app.js中配置两个全局变量，一个存储文章id和计时器对象，一个存储倒计时信息
+ * 2.评论前判断全局变量中是否存有该文章的计时器对象
+ *   2.1如果有不做任何操作
+ *   2.2如果没有则调用API
+ * 3.回调函数中，创建一个计时器，并启动
+ *   3.1倒计时开始，将文章id和计时器对象和倒计时信息存在相应的全局变量中
+ *   3.2正在倒计时，从倒计时信息全局变量读取数据，并渲染到UI上
+ *   3.3倒计时结束，清除以上两个数据
+ * 4.如果在倒计时未结束前退出详情页，再次进入该页面，会在onShow中判断
+ *   4.1拿到当前倒计时对象
+ *   4.2重新倒计时相关回调，在回调内读取数据或删除数据
+ * 
+ * 评论比较复杂，因为涉及到的场景较多。
+ * 一个文章只会有一个点赞计时器和一个评论计时器，因为在创建启动前先做了判断，如果内存中有该文章id就说明有计时器正在运行，则不做任何操作
+ * 
+ */
 const Api = require('../../utils/api');
 const time = require('../../utils/time');
 const App = getApp();
+const Timer = require('../../utils/timer.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    wxTimerList: {},
     commentList: [],
     placeholder: '请输入评论',
     inputValue: '',
     disabled: false,
-    commentCountTime: 60,
-    likeCountTime: 60,
+    // commentCountTime: 60,
+    // likeCountTime: 60,
     isFixed: false,
     page: 0,
     parentId: -1,
@@ -79,7 +112,7 @@ Page({
    * @param {*} obj 
    */
   commentSuccessFun: function (res, obj) {
-    console.log(res);
+    // console.log(res);
     var array = res.data.content;
     var commentList = obj.data.commentList;
     if (array.length > 0) {
@@ -128,15 +161,27 @@ Page({
    * 喜欢文章
    */
   likePost: function () {
-    var likeCountTime = this.data.likeCountTime;
-    if (likeCountTime != 60) {
+    // var likeCountTime = this.data.likeCountTime;
+    // if (likeCountTime != 60) {
+    //   App.showToast("休息下，喝杯卡布奇诺");
+    // } else {
+    //   var postId = this.data.postId;
+    //   var data = {};
+    //   Api.requestPostApi('/api/content/posts/' + postId + '/likes', data, this, this.likePostSuccessFun);
+    // }
+    // var wxTimerList = this.data.wxTimerList;
+    // console.log(wxTimerList)
+    // console.log(App.globalData.LIKE_COUNT_OBJECT)
+    var like_count = App.globalData.LIKE_COUNT_OBJECT;
+    if (like_count.hasOwnProperty(this.data.postId)) {
+      //如果对象中有该POSTID属性，则不允许调用Api
       App.showToast("休息下，喝杯卡布奇诺");
     } else {
+      //如果对象中没有有该POSTID属性，则允许调用Api
       var postId = this.data.postId;
       var data = {};
       Api.requestPostApi('/api/content/posts/' + postId + '/likes', data, this, this.likePostSuccessFun);
     }
-
   },
   /**
    * 喜欢文章成功回调
@@ -145,21 +190,43 @@ Page({
    */
   likePostSuccessFun: function (res, obj) {
     App.showToast("哇塞！您成功喜欢了该文章");
-    var likeCountTime = obj.data.likeCountTime;
-    var setLikeCount = setInterval(function () {
-      if (likeCountTime < 1) {
-        clearInterval(setLikeCount);
-        obj.setData({
-          likeCountTime: 60
-        })
-      } else {
-        likeCountTime = likeCountTime - 1
-        obj.setData({
-          likeCountTime: likeCountTime
-        })
-        // console.log("likeCountTime:"+likeCountTime)
+    // var likeCountTime = obj.data.likeCountTime;
+    // var setLikeCount = setInterval(function () {
+    //   if (likeCountTime < 1) {
+    //     clearInterval(setLikeCount);
+    //     obj.setData({
+    //       likeCountTime: 60
+    //     })
+    //   } else {
+    //     likeCountTime = likeCountTime - 1
+    //     obj.setData({
+    //       likeCountTime: likeCountTime
+    //     })
+    //     console.log("likeCountTime:" + likeCountTime)
+    //   }
+    // }, 1000);
+
+    var likeTimer = new Timer({
+      beginTime: "00:00:10",
+      name: 'likeTimer',
+      complete: function () {
+        // console.log('倒计时完成')
+        //倒计时完成后将该文章从内存中移除
+        var like_count = App.globalData.LIKE_COUNT_OBJECT;
+        var postId = obj.data.postId;
+        delete like_count[postId];
+      },
+      interval: 1,
+      intervalFn: function () {
+
       }
-    }, 1000);
+    })
+    likeTimer.start(obj);
+    //启动计时器后将该计时器添加到内存中
+    var like_count = App.globalData.LIKE_COUNT_OBJECT;
+    var postId = obj.data.postId;
+    like_count[postId] = likeTimer.intervarID;
+
   },
   /** 
    * 回复他人评论点击事件
@@ -173,7 +240,7 @@ Page({
       success(res) {
         // console.log(res);
         var replyCommentItem = e.detail.item;
-        console.log(replyCommentItem);
+        // console.log(replyCommentItem);
         var replyAuthor = '回复@' + replyCommentItem.author + ':'
         var replyContent = replyCommentItem.content;
         _this.setData({
@@ -220,7 +287,7 @@ Page({
    * @param {*} e 
    */
   onReplyInput: function (e) {
-    console.log(e);
+    // console.log(e);
     var replyComment = e.detail.value;
     this.setData({
       replyComment: replyComment
@@ -274,43 +341,90 @@ Page({
    */
   commitComment: function (e) {
     var _this = this;
-    var comment = e.detail.value;
-    console.log(comment);
-    console.log(comment.length);
-    comment = comment.replace(/\s+/g, '');
-    if (!comment) {
-      App.showToast("请输入评论");
+    // console.log(App.globalData.COMMENT_COUNT_OBJECT)
+    var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
+    var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
+    if (comment_count.hasOwnProperty(_this.data.postId) && COMMENT_TIMER.hasOwnProperty(_this.data.postId)) {
+      //如果对象中有该POSTID属性，则不允许调用Api
+      App.showToast("休息下，喝杯卡布奇诺");
     } else {
-      //先判断用户是否登陆
-      App.getUserInfo({
-        success(res) {
-          // console.log(res);
-          _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
-        },
-        fail() {
-          console.log("没有用户信息")
-          App.showSinglModalFun('您尚未登陆，请先授权登陆', {
-            success() {
-              // console.log("dddd")
-              App.showLoading("Loading");
-              wx.getUserProfile({
-                desc: '用于完善会员资料',
-                success: (res) => {
-                  wx.setStorageSync('userInfo', res.userInfo)
-                  App.showToast("授权登陆成功")
-                },
-                fail() {
-                  App.showToast("授权登陆失败")
-                },
-                complete() {
-                  App.hideLoading();
-                }
-              })
-            }
-          })
-        }
-      })
+      //如果对象中没有有该POSTID属性，则允许调用Api
+      var comment = e.detail.value;
+      // console.log(comment);
+      // console.log(comment.length);
+      comment = comment.replace(/\s+/g, '');
+      if (!comment) {
+        App.showToast("请输入评论");
+      } else {
+        //先判断用户是否登陆
+        App.getUserInfo({
+          success(res) {
+            // console.log(res);
+            _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
+          },
+          fail() {
+            // console.log("没有用户信息")
+            App.showSinglModalFun('您尚未登陆，请先授权登陆', {
+              success() {
+                // console.log("dddd")
+                App.showLoading("Loading");
+                wx.getUserProfile({
+                  desc: '用于完善会员资料',
+                  success: (res) => {
+                    wx.setStorageSync('userInfo', res.userInfo)
+                    App.showToast("授权登陆成功")
+                  },
+                  fail() {
+                    App.showToast("授权登陆失败")
+                  },
+                  complete() {
+                    App.hideLoading();
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
     }
+
+    // var comment = e.detail.value;
+    // console.log(comment);
+    // console.log(comment.length);
+    // comment = comment.replace(/\s+/g, '');
+    // if (!comment) {
+    //   App.showToast("请输入评论");
+    // } else {
+    //   //先判断用户是否登陆
+    //   App.getUserInfo({
+    //     success(res) {
+    //       // console.log(res);
+    //       _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
+    //     },
+    //     fail() {
+    //       console.log("没有用户信息")
+    //       App.showSinglModalFun('您尚未登陆，请先授权登陆', {
+    //         success() {
+    //           // console.log("dddd")
+    //           App.showLoading("Loading");
+    //           wx.getUserProfile({
+    //             desc: '用于完善会员资料',
+    //             success: (res) => {
+    //               wx.setStorageSync('userInfo', res.userInfo)
+    //               App.showToast("授权登陆成功")
+    //             },
+    //             fail() {
+    //               App.showToast("授权登陆失败")
+    //             },
+    //             complete() {
+    //               App.hideLoading();
+    //             }
+    //           })
+    //         }
+    //       })
+    //     }
+    //   })
+    // }
   },
   /**
    * 评论成功回调
@@ -323,24 +437,63 @@ Page({
       disabled: true
     });
     App.showSinglModal('评论等待管理员审核，审核通过后立刻展示')
-    var setCount = setInterval(function () {
-      var countTime = obj.data.commentCountTime;
-      if (countTime < 1) {
-        clearInterval(setCount);
+    // var setCount = setInterval(function () {
+    //   var countTime = obj.data.commentCountTime;
+    //   if (countTime < 1) {
+    //     clearInterval(setCount);
+    //     obj.setData({
+    //       commentCountTime: 60,
+    //       disabled: false,
+    //       placeholder: '请输入评论'
+    //     });
+    //   } else {
+    //     countTime = countTime - 1
+    //     obj.setData({
+    //       commentCountTime: countTime,
+    //       disabled: true,
+    //       placeholder: countTime + '秒后再次评论'
+    //     });
+    //   }
+    // }, 1000);
+
+    var commentTimer = new Timer({
+      beginTime: "00:00:20",
+      name: 'commentTimer',
+      complete: function () {
+        // console.log('评论倒计时完成')
+        //倒计时完成后将该文章从内存中移除
+        var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
+        var postId = obj.data.postId;
+        delete comment_count[postId];
+
+        var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
+        delete COMMENT_TIMER[postId];
         obj.setData({
-          commentCountTime: 60,
           disabled: false,
           placeholder: '请输入评论'
-        });
-      } else {
-        countTime = countTime - 1
+        })
+      },
+      interval: 1,
+      intervalFn: function () {
+        // console.log(App.globalData.COMMENT_TIMER[obj.data.postId])
+        // console.log(App.globalData.COMMENT_COUNT_OBJECT[obj.data.postId])
+        var postId = obj.data.postId;
+        var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
+        COMMENT_TIMER[postId] = obj.data.wxTimerList;
         obj.setData({
-          commentCountTime: countTime,
           disabled: true,
-          placeholder: countTime + '秒后再次评论'
-        });
+          placeholder: COMMENT_TIMER[postId].commentTimer.wxTimerSecond + '秒后再评论'
+        })
       }
-    }, 1000);
+    })
+    commentTimer.start(obj);
+    //启动计时器后将该计时器添加到内存中
+    var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
+    var postId = obj.data.postId;
+    comment_count[postId] = commentTimer;
+
+    var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
+    COMMENT_TIMER[postId] = obj.data.wxTimerList;
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -353,7 +506,39 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var _this = this ;
+    var postId = _this.data.postId;
+    var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
+    var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
+    if (comment_count.hasOwnProperty(postId) && COMMENT_TIMER.hasOwnProperty(postId)) {
+      var timer = comment_count[postId];
+      timer.intervalFn = function () {
+        // console.log("正在倒计时")
+        _this.setData({
+          disabled: true,
+          placeholder: COMMENT_TIMER[postId].commentTimer.wxTimerSecond + '秒后再评论'
+        })
+      },
+      timer.complete = function () {
+        // console.log('评论倒计时完成')
+        //倒计时完成后将该文章从内存中移除
+        var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
+        delete comment_count[postId];
 
+        var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
+        delete COMMENT_TIMER[postId];
+        _this.setData({
+          disabled: false,
+          placeholder: '请输入评论'
+        })
+      }
+    } else {
+      // console.log("计时器对象不存在")
+      this.setData({
+        disabled: false,
+        placeholder: '请输入评论'
+      })
+    }
   },
 
   /**

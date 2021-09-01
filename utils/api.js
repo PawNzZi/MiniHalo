@@ -114,7 +114,6 @@ function requestApi(url, params, method, type, sourceObj, successFun) {
         success: function (res) {
             // console.log("s");
             // console.log(res)
-            App.hideLoading();
             if (res.data.status == 200) {
                 typeof successFun == 'function' && successFun(res.data, sourceObj);
             } else {
@@ -131,14 +130,13 @@ function requestApi(url, params, method, type, sourceObj, successFun) {
                 }
 
             }
-
         },
         fail: function (res) {
             App.showToast("网络错误")
             // typeof failFun == 'function' && failFun(res.data, sourceObj)
         },
         complete: function (res) {
-           
+            App.hideLoading();
             // typeof completeFun == 'function' && completeFun(res.data, sourceObj)
         }
     })

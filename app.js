@@ -26,7 +26,10 @@ App({
     })
   },
   globalData: {
-    AUTHORIZATIONS: 'caonimachoubi2'
+    AUTHORIZATIONS: 'caonimachoubi2',
+    LIKE_COUNT_OBJECT:{},//存储文章点赞的文章id和对应的计时器id
+    COMMENT_COUNT_OBJECT:{},//存储文章评论的文章id和对应的计时器id
+    COMMENT_TIMER:{},//存储当前计时器倒计时内容
   },
   setNavSize: function () {
     // var that = this                
