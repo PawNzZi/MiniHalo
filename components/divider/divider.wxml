@@ -1,0 +1,2 @@
+<!--components/divider/divider.wxml-->
+<view class="divider" style="top: {{navSize}}px;"></view>

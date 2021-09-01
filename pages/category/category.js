@@ -38,7 +38,7 @@ Page({
     var data = {};
     data.page= page;
     data.size= 15;
-    data.sort= 'visits,desc';
+    data.sort= 'createTime,desc';
     Api.requestGetApi('/api/content/categories/'+ slug +'/posts',data,this,this.slugSuccessFun);
   },
   slugSuccessFun:function(res,obj){

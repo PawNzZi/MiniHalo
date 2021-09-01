@@ -1,0 +1,9 @@
+/* components/divider/divider.wxss */
+
+.divider {
+  position: fixed;
+  width: 100%;
+  background-color: #e9eaec;
+  border: 0 solid #ebedf0;
+  height: 1rpx;
+}

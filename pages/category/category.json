@@ -8,7 +8,7 @@
     "van-divider": "../../dist/divider/index",
     "van-sticky": "../../dist/sticky/index",
     "component-itemCard": "../../components/itemCard/itemCard",
-    "component-navigationBar": "../../components/navigationBar/navigationBar"
-
+    "component-navigationBar": "../../components/navigationBar/navigationBar",
+    "component-divider":"../../components/divider/divider"
   }
 }

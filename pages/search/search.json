@@ -5,6 +5,8 @@
     "van-empty": "../../dist/empty/index",
     "van-divider": "../../dist/divider/index",
     "component-itemCard": "../../components/itemCard/itemCard",
-    "component-navigationBar": "../../components/navigationBar/navigationBar"
+    "component-navigationBar": "../../components/navigationBar/navigationBar",
+    "component-divider":"../../components/divider/divider"
+
   }
 }

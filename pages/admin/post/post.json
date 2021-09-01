@@ -6,6 +6,7 @@
     "van-divider": "../../../dist/divider/index",
     "van-share-sheet": "../../../dist/share-sheet/index",
     "component-itemCard": "../../../components/itemCard/itemCard",
-    "component-navigationBar": "../../../components/navigationBar/navigationBar"
+    "component-navigationBar": "../../../components/navigationBar/navigationBar",
+    "component-divider":"../../../components/divider/divider"
   } 
 }

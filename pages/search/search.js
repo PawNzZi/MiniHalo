@@ -7,7 +7,7 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
+  data: { 
     optionArray: [
       { text: '默认排序', value: 0 ,sort:'' },
       { text: '文章热度', value: 1 ,sort:'visits,desc'},

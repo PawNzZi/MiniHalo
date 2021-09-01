@@ -2,8 +2,8 @@
 <component-navigationBar type="{{3}}" backgroundColor="#fff" searchColor="" disabled="{{false}}"
 	bind:onSearch="onSearch" optionArray="{{optionArray}}" bind:clearKeyWord="clearKeyWord"  bind:dropdownChange="dropdownChange">
 </component-navigationBar>
+<component-divider navSize="{{navSize}}"></component-divider>
 <view style="margin-top: {{navSize}}px;">
-	<van-divider />
 	<!--文章列表-->
 	<component-itemCard array="{{articleList}}" wx:if="{{articleList.length>0}}"></component-itemCard>
 	<van-empty wx:if="{{isEmpty}}" class="custom-empty" image="http://cdn.lingyikz.cn/empty_status_tag.jpg"

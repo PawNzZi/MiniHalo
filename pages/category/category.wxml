@@ -1,5 +1,6 @@
 <!--pages/category/category.wxml-->
 <component-navigationBar backgroundColor="#fff" searchColor=""></component-navigationBar>
+<component-divider navSize="{{navSize}}"></component-divider>
 <view style="position: fixed;top: {{navSize+1}}px;">
   <van-sidebar active-key="{{ activeKey }}">
     <block wx:for="{{categoryList}}">
@@ -8,7 +9,6 @@
   </van-sidebar>
 </view>
 <view style="display: flex;flex-direction: column;margin-top: {{navSize}}px;">
-  <van-divider />
   <view  style="margin-left: 80px;">
     <!--文章列表-->
     <!-- <view class="content-l" wx:if="{{!isEmpty}}"></view> -->
