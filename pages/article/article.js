@@ -171,7 +171,7 @@ Page({
     //先判断用户是否登陆
     App.getUserInfo({
       success(res) {
-        console.log(res);
+        // console.log(res);
         var replyCommentItem = e.detail.item;
         console.log(replyCommentItem);
         var replyAuthor = '回复@' + replyCommentItem.author + ':'
@@ -284,7 +284,7 @@ Page({
       //先判断用户是否登陆
       App.getUserInfo({
         success(res) {
-          console.log(res);
+          // console.log(res);
           _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
         },
         fail() {

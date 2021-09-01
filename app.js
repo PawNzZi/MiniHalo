@@ -162,7 +162,12 @@ App({
   getUserInfo: function (handler) {
     var userInfo = wx.getStorageSync('userInfo');
     if (userInfo) {
-      handler.success(userInfo);
+      if(userInfo.hasOwnProperty('nickName') && userInfo.hasOwnProperty('avatarUrl')){
+        handler.success(userInfo);
+      }else{
+        handler.fail();
+      }
+    
     } else {
       handler.fail();
     }
@@ -174,7 +179,14 @@ App({
   getAdminInfo: function (handler) {
     var admin = wx.getStorageSync('admin');
     if (admin) {
-      handler.success(admin);
+      if(admin.hasOwnProperty('access_token')){
+        handler.success(admin);
+      }else{
+        wx.redirectTo({
+          url: '/pages/admin/adminLogin/adminLogin',
+        })
+      }
+      
     } else {
       wx.redirectTo({
         url: '/pages/admin/adminLogin/adminLogin',

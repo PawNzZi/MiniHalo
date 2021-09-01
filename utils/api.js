@@ -81,6 +81,7 @@ function requestApi(url, params, method, type, sourceObj, successFun) {
     App.showLoading("Loading")
     var AUTHORIZATIONS = App.globalData.AUTHORIZATIONS;
     var adminAuthorization;
+
     var admin = wx.getStorageSync('admin');
     if (admin) {
         adminAuthorization = admin.access_token;

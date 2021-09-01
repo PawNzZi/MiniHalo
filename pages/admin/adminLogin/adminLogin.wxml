@@ -1,11 +1,14 @@
 <!--pages/admin/adminLogin/adminLogin.wxml-->
 <view>
   <view class="login-view">
-    <van-image round width="80" height="80" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-    
+    <van-image round width="80" height="80" src="http://cdn.lingyikz.cn/logo.jpg" />
     <view class="input-view">
-      <van-field value="{{ userNameValue }}" placeholder="请输入用户名" required bind:change="getUserName" />
-      <van-field value="{{ passwordValue }}" placeholder="请输入密码" border="{{ false }}" required type="password" bind:change="getPassword" />
+      <van-field left-icon="contact" value="{{ userNameValue }}" placeholder="请输入用户名"
+        bind:change="getUserName" border="{{ false }}" />
+    </view>
+    <view class="input-view" style="margin-top: 20rpx;">
+      <van-field left-icon="browsing-history-o" value="{{ passwordValue }}" placeholder="请输入密码" border="{{ false }}"
+        type="password" bind:change="getPassword" />
     </view>
     <van-button color="#495060" bind:click="login">登陆</van-button>
   </view>

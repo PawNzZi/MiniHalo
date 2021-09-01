@@ -16,8 +16,15 @@ Page({
   onLoad: function (options) {
     //判断是否已经有用户信息
     // this.getUserProfile();
-    var userInfo = wx.getStorageSync('userInfo');
-    this.setData({userInfo:userInfo})
+    var _this = this;
+    App.getUserInfo({
+      success(res){
+        _this.setData(({userInfo:res}))
+      },
+      fail(){
+
+      }
+    });
     var data = {};
     data.sort = 'priority,desc'
     Api.requestGetApi('/api/content/links',data,this,this.linkSuccessFun);
@@ -56,29 +63,39 @@ Page({
   },
   getUserProfile: function () {
     var _this = this;
-    var userInfo = wx.getStorageSync('userInfo');
-    if (userInfo) {
-      _this.setData({
-        userInfo: userInfo
-      })
-    } else {
-      wx.getUserProfile({
-        desc: '用于完善会员资料',
-        success: (res) => {
-          _this.setData({
-            userInfo: userInfo
-          })
-          wx.setStorageSync('userInfo', res.userInfo)
-          App.showToast("授权登陆成功")
-        },
-        fail() {
-          App.showToast("授权登陆失败")
-        },
-        complete() {
-          App.hideLoading();
-        }
-      })
-    }
+    App.getUserInfo({
+      success(res){
+        _this.setData({
+          userInfo: res
+        })
+      },
+      fail(){
+        wx.getUserProfile({
+          desc: '用于完善会员资料',
+          success: (res) => {
+            _this.setData({
+              userInfo: res.userInfo
+            })
+            wx.setStorageSync('userInfo', res.userInfo)
+            App.showToast("授权登陆成功")
+          },
+          fail() {
+            App.showToast("授权登陆失败")
+          },
+          complete() {
+            App.hideLoading();
+          }
+        })
+      }
+    })
+    // var userInfo = wx.getStorageSync('userInfo');
+    // if (userInfo) {
+    //   _this.setData({
+    //     userInfo: userInfo
+    //   })
+    // } else {
+     
+    // }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -11,10 +11,12 @@
 }
 .input-view{
   margin-top: 40rpx;
-  border:1rpx solid #dddee1;
-  padding: 20rpx;
-  border-radius: 9rpx;
+  border:2rpx solid #dddee1;
+  /* padding: 20rpx; */
+  /* border-radius: 16rpx; */
+  /* box-shadow: 0 4rpx 10rpx rgb(0, 0, 0, .2); */
 }
+
 .van-button{
   margin-top: 40rpx !important;
 }
