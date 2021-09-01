@@ -16,6 +16,8 @@ Page({
     ],
     articleList:[],
     isEmpty:false,
+    keyword:'',
+    status:'PUBLISHED',
     showShare: false,
     options: [{
         name: '新增文章',
