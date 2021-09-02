@@ -303,28 +303,35 @@ App({
     })
   },
 
-  // articleSc: function (data, handler) {
-  //   var _this = this ;
-  //   wx.request({
-  //     url: 'https://www.coder.work/textcensoring/getresult',
-  //     method: 'POST',
-  //     data: data,
-  //     header: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     success:function(res){
-  //       // console.log(res);
-  //       if(res.statusCode == 200 && res.data.errcode == 0){
-  //          handler.success(res.data.result)
-  //       }else{
-  //         _this.showToast('检测文章失败')
-  //       }
-  //     },
-  //     fail:function(res){
-  //       _this.showToast('检测文章失败')
-  //     },
-  //   })
+  articleSc: function (content, handler) {
 
-  // }
+    var _this = this ;
+    _this.showLoading("Loading");
+    var data = {};
+    data.content = content ;
+    wx.request({
+      url: 'https://api.lingyikz.cn/textcensoring/getresult',
+      method: 'POST',
+      data: data,
+      header: {
+        'Content-Type': 'application/json',
+      },
+      success:function(res){
+        // console.log(res);
+        if(res.statusCode == 200 && res.data.errcode == 0){
+           handler.success(res.data.result)
+        }else{
+          _this.showToast('检测文章失败')
+        }
+      },
+      fail:function(res){
+        _this.showToast('检测文章失败')
+      },
+      complete:function(){
+        _this.hideLoading();
+      }
+    })
+
+  }
 
 })
