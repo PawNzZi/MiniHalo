@@ -297,14 +297,21 @@ Page({
    * 提交回复别人的评论
    */
   replyCommitComment: function () {
-    var replyComment = this.data.replyComment;
+    var _this = this ;
+    var replyComment = _this.data.replyComment;
     replyComment = replyComment.replace(/\s+/g, '');
     if (!replyComment) {
       App.showToast("请输入评论");
     } else {
-      var userInfo = wx.getStorageSync('userInfo');
-      var replyCommentItem = this.data.replyCommentItem;
-      this.commitCommentApi(replyCommentItem.id, replyComment, userInfo.nickName, userInfo.avatarUrl, this.replyCommentSuccessFun);
+      App.msgSc(replyComment, {
+        success(res) {
+          // console.log(res)
+          var userInfo = wx.getStorageSync('userInfo');
+          var replyCommentItem = _this.data.replyCommentItem;
+          _this.commitCommentApi(replyCommentItem.id, replyComment, userInfo.nickName, userInfo.avatarUrl, _this.replyCommentSuccessFun);
+        }
+      })
+
     }
   },
   /**
@@ -341,7 +348,7 @@ Page({
    */
   commitComment: function (e) {
     var _this = this;
-    // console.log(App.globalData.COMMENT_COUNT_OBJECT)
+
     var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
     var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
     if (comment_count.hasOwnProperty(_this.data.postId) && COMMENT_TIMER.hasOwnProperty(_this.data.postId)) {
@@ -350,8 +357,6 @@ Page({
     } else {
       //如果对象中没有有该POSTID属性，则允许调用Api
       var comment = e.detail.value;
-      // console.log(comment);
-      // console.log(comment.length);
       comment = comment.replace(/\s+/g, '');
       if (!comment) {
         App.showToast("请输入评论");
@@ -360,7 +365,12 @@ Page({
         App.getUserInfo({
           success(res) {
             // console.log(res);
-            _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
+            App.msgSc(comment, {
+              success(result) {
+                // console.log(result)
+                _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
+              }
+            })
           },
           fail() {
             // console.log("没有用户信息")
@@ -506,32 +516,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var _this = this ;
+    var _this = this;
     var postId = _this.data.postId;
     var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
     var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
     if (comment_count.hasOwnProperty(postId) && COMMENT_TIMER.hasOwnProperty(postId)) {
       var timer = comment_count[postId];
       timer.intervalFn = function () {
-        // console.log("正在倒计时")
-        _this.setData({
-          disabled: true,
-          placeholder: COMMENT_TIMER[postId].commentTimer.wxTimerSecond + '秒后再评论'
-        })
-      },
-      timer.complete = function () {
-        // console.log('评论倒计时完成')
-        //倒计时完成后将该文章从内存中移除
-        var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
-        delete comment_count[postId];
+          // console.log("正在倒计时")
+          _this.setData({
+            disabled: true,
+            placeholder: COMMENT_TIMER[postId].commentTimer.wxTimerSecond + '秒后再评论'
+          })
+        },
+        timer.complete = function () {
+          // console.log('评论倒计时完成')
+          //倒计时完成后将该文章从内存中移除
+          var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
+          delete comment_count[postId];
 
-        var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
-        delete COMMENT_TIMER[postId];
-        _this.setData({
-          disabled: false,
-          placeholder: '请输入评论'
-        })
-      }
+          var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
+          delete COMMENT_TIMER[postId];
+          _this.setData({
+            disabled: false,
+            placeholder: '请输入评论'
+          })
+        }
     } else {
       // console.log("计时器对象不存在")
       this.setData({

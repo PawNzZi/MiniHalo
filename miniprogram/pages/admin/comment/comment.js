@@ -236,13 +236,20 @@ Page({
    * 提交回复别人的评论
    */
   replyCommitComment: function () {
-    var replyComment = this.data.replyComment;
+    var _this = this;
+    var replyComment = _this.data.replyComment;
     replyComment = replyComment.replace(/\s+/g, '');
     if (!replyComment) {
       App.showToast("请输入评论");
     } else {
-      var replyCommentItem = this.data.replyCommentItem;
-      this.createPostComment(replyComment, replyCommentItem);
+      App.msgSc(replyComment, {
+        success(res) {
+          // console.log(res)
+          var replyCommentItem = _this.data.replyCommentItem;
+          _this.createPostComment(replyComment, replyCommentItem);
+        }
+      })
+
     }
   },
   /**

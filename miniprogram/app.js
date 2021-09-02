@@ -275,24 +275,32 @@ App({
       }
     })
   },
-  // getAdminOpenid:function(){
-  //   // 25423b971eab9a8f2cd6f2624259c8d2
-  //   var APPID = 'wxdbec304938543dd8';
-  //   var SECRET = '25423b971eab9a8f2cd6f2624259c8d2'
-  //   wx.login({
-  //     success(res){
-  //       var code = res.code;
-  //       console.log(code);
-  //       wx.request({
-  //         url: 'https://api.weixin.qq.com/sns/jscode2session?appid='+APPID+'&secret=25423b971eab9a8f2cd6f2624259c8d2&js_code='+code+'&grant_type=authorization_code',
-  //         success(res){
-  //           console.log(res);
-  //         },
-  //         fail(res){
-  //           console.log(res);
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
+  /**
+   * 检测评论是否敏感
+   * @param {*} content 
+   * @param {*} handler 
+   */
+  msgSc:function(content,handler){
+    var _this = this ;
+    wx.cloud.callFunction({
+      name: 'msgSC',
+      data: {
+        text: content
+      },
+      complete: res => {
+        // console.log(res.result)
+        if(res.result.data.errCode == 87014){
+          //命中敏感词
+          _this.showToast(res.result.msg)
+        }else if(res.result.data.errCode == 0){
+          //未命中敏感词
+          handler.success(res.result);
+        }else{
+          //其他错误
+          _this.showToast(res.result.msg)
+        }
+      }
+    })
+  }
+
 })

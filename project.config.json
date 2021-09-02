@@ -5,6 +5,7 @@
   "packOptions": {
     "ignore": []
   },
+
   "setting": {
     "urlCheck": false,
     "es6": true,
