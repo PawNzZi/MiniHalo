@@ -1,0 +1,74 @@
+<!--pages/user/user.wxml-->
+<!--pages/table/user/user.wxml-->
+<view class="user-card" style="background-image: url('http://cdn.lingyikz.cn/1user_backgroud.jpg')"></view>
+<view class="avatar-round"></view>
+<van-image round width="160rpx" height="160rpx" src="{{userInfo.avatarUrl}}" custom-class="userAvatar"
+	style="position:absolute;top: 2rpx;left:50rpx;" />
+<view class="userinfo-right">
+	<text style="font-size:30rpx;color:#495060;margin-top:20rpx;margin-left:88rpx;font-weight:bold"
+		wx:if="{{userInfo}}">{{userInfo.nickName}}</text>
+	<button hover-class="none" wx:else style="background-color:#000" bindtap="getUserProfile" class="login">
+		<text style="font-size:30rpx;color:#495060;margin-top:20rpx">点我授权登录</text>
+	</button>
+</view>
+<view class="service-card">
+	<view class="service-card-view">
+		<text style="font-size:26rpx;color:#495060;font-weight: bold;">我的服务</text>
+		<van-divider />
+		<view class="service-card-view-bottom">
+			<view class="service-card-item">
+				<button class="button-style" open-type="share">
+					<image style="width:60rpx;height:60rpx" src="../../img/share.png"></image>
+					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">分享好友</text>
+				</button>
+			</view>
+			<view class="service-card-item">
+				<button class="button-style" open-type="contact">
+					<image style="width:60rpx;height:60rpx" src="../../img/zhizuo.png"></image>
+					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">免费制作</text>
+				</button>
+			</view>
+			<view class="service-card-item">
+				<button class="button-style" open-type="contact">
+					<image style="width:60rpx;height:60rpx" src="../../img/advice.png"></image>
+					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">我有建议</text>
+				</button>
+			</view>
+			<view class="service-card-item">
+				<button class="button-style">
+					<image style="width:60rpx;height:60rpx" src="../../img/gongzhonghao.png"></image>
+					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">官方公众号</text>
+				</button>
+			</view>
+			<view class="service-card-item">
+				<button class="button-style" open-type="contact">
+					<image style="width:60rpx;height:60rpx" src="../../img/aboutus.png"></image>
+					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">联系客服</text>
+				</button>
+			</view>
+			<view class="service-card-item" bindtap="toAdminPage" wx:if="{{isAdmin}}">
+				<button class="button-style">
+					<image style="width:60rpx;height:60rpx" src="../../img/admin.png"></image>
+					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">管理员登陆</text>
+				</button>
+
+			</view>
+		</view>
+	</view>
+</view>
+<view class="manage-card" wx:if="{{linkList.length > 0}}">
+	<view class="service-card-view">
+		<text style="font-size:26rpx;color:#495060;font-weight: bold;">友链</text>
+		<van-divider />
+		<view class="link-card-view-bottom">
+			<block wx:for="{{linkList}}">
+				<view class="link-card-item" bindtap="toLinkProgram" data-weapp="{{item.weapp}}">
+						<image style="width:80rpx;height:80rpx;border-radius: 9rpx;" src="{{item.logo}}"></image>
+						<text style="font-size:26rpx;color:#495060;padding-top:10rpx">{{item.name}}</text>
+				</view>
+			</block>
+		</view>
+	</view>
+</view>
+<view class="bottom-card"></view>
+<!-- <view class="version">v1.0</view> -->
