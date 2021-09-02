@@ -95,7 +95,7 @@
         {
           "name": "pages/admin/post/postDetail/postDetail",
           "pathName": "pages/admin/post/postDetail/postDetail",
-          "query": "index=1&postId=49",
+          "query": "index=0",
           "scene": null
         }
       ]

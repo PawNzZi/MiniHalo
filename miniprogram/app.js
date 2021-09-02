@@ -34,7 +34,7 @@ App({
     })
   },
   globalData: {
-    WX_OPENID : 'o7Vka4y6Kv6yLrULn_uKuuYGGvMo',//管理员的openid
+    WX_OPENID: 'o7Vka4y6Kv6yLrULn_uKuuYGGvMo', //管理员的openid
     AUTHORIZATIONS: 'caonimachoubi2',
     LIKE_COUNT_OBJECT: {}, //存储文章点赞的文章id和对应的计时器id
     COMMENT_COUNT_OBJECT: {}, //存储文章评论的文章id和对应的计时器id
@@ -280,8 +280,8 @@ App({
    * @param {*} content 
    * @param {*} handler 
    */
-  msgSc:function(content,handler){
-    var _this = this ;
+  msgSc: function (content, handler) {
+    var _this = this;
     wx.cloud.callFunction({
       name: 'msgSC',
       data: {
@@ -289,18 +289,42 @@ App({
       },
       complete: res => {
         // console.log(res.result)
-        if(res.result.data.errCode == 87014){
+        if (res.result.data.errCode == 87014) {
           //命中敏感词
           _this.showToast(res.result.msg)
-        }else if(res.result.data.errCode == 0){
+        } else if (res.result.data.errCode == 0) {
           //未命中敏感词
           handler.success(res.result);
-        }else{
+        } else {
           //其他错误
           _this.showToast(res.result.msg)
         }
       }
     })
-  }
+  },
+
+  // articleSc: function (data, handler) {
+  //   var _this = this ;
+  //   wx.request({
+  //     url: 'https://www.coder.work/textcensoring/getresult',
+  //     method: 'POST',
+  //     data: data,
+  //     header: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     success:function(res){
+  //       // console.log(res);
+  //       if(res.statusCode == 200 && res.data.errcode == 0){
+  //          handler.success(res.data.result)
+  //       }else{
+  //         _this.showToast('检测文章失败')
+  //       }
+  //     },
+  //     fail:function(res){
+  //       _this.showToast('检测文章失败')
+  //     },
+  //   })
+
+  // }
 
 })
