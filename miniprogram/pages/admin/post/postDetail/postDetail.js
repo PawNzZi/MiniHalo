@@ -109,11 +109,11 @@ Page({
     var content = _this.data.content;
     var title = _this.data.title;
     if (App.checkTextIsEmpty(title) && App.checkTextIsEmpty(content)) {
-
-      App.articleSc(content, {
-        success(res) {
-          var hits = res.hits;
+      App.articleSC(content, {
+        success(hits) {
+          console.log(hits);
           if (hits.length > 0) {
+            //检测有敏感词
             var keyword = [];
             for (var i = 0; i < hits.length; i++) {
               for (var j = 0; j < hits[i].word_array.length; j++) {
@@ -128,16 +128,50 @@ Page({
               }
             })
           } else {
+            //检测无敏感词
             _this.setData({
-              showPopup:true
+              showPopup: true
             })
           }
-
-        }
+        },
       })
     } else {
-      App.showToast("标题或内容为空")
+      App.showToast("标题或内容为空");
     }
+
+    // var _this = this;
+    // var content = _this.data.content;
+    // var title = _this.data.title;
+    // if (App.checkTextIsEmpty(title) && App.checkTextIsEmpty(content)) {
+
+    //   App.articleSc(content, {
+    //     success(res) {
+    //       var hits = res.hits;
+    //       if (hits.length > 0) {
+    //         var keyword = [];
+    //         for (var i = 0; i < hits.length; i++) {
+    //           for (var j = 0; j < hits[i].word_array.length; j++) {
+    //             keyword.push(hits[i].word_array[j])
+    //           }
+    //         }
+    //         App.showModal('敏感词:' + keyword.toString(), {
+    //           success() {
+    //             _this.setData({
+    //               showPopup: true
+    //             })
+    //           }
+    //         })
+    //       } else {
+    //         _this.setData({
+    //           showPopup:true
+    //         })
+    //       }
+
+    //     }
+    //   })
+    // } else {
+    //   App.showToast("标题或内容为空")
+    // }
   },
   /**
    * 保存到草稿箱

@@ -303,35 +303,63 @@ App({
     })
   },
 
-  articleSc: function (content, handler) {
+  // articleSc: function (content, handler) {
+  //   var _this = this ;
+  //   _this.showLoading("Loading");
+  //   var data = {};
+  //   data.content = content ;
+  //   wx.request({
+  //     url: 'https://api.lingyikz.cn/textcensoring/getresult',
+  //     method: 'POST',
+  //     data: data,
+  //     header: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     success:function(res){
+  //       // console.log(res);
+  //       if(res.statusCode == 200 && res.data.errcode == 0){
+  //          handler.success(res.data.result)
+  //       }else{
+  //         _this.showToast('检测文章失败')
+  //       }
+  //     },
+  //     fail:function(res){
+  //       _this.showToast('检测文章失败')
+  //     },
+  //     complete:function(){
+  //       _this.hideLoading();
+  //     }
+  //   })
 
-    var _this = this ;
-    _this.showLoading("Loading");
-    var data = {};
-    data.content = content ;
-    wx.request({
-      url: 'https://api.lingyikz.cn/textcensoring/getresult',
-      method: 'POST',
-      data: data,
-      header: {
-        'Content-Type': 'application/json',
+  // }
+  /**
+   * 利用云函数调取第三方api检测文章是否有敏感词
+   * @param {*} content 
+   * @param {*} handler 
+   */
+  articleSC: function (content, handler) {
+    var _this = this;
+    _this.showLoading("检测中");
+    wx.cloud.callFunction({
+      name: 'articleSC',
+      data: {
+        body: {
+          content: content
+        },
       },
-      success:function(res){
-        // console.log(res);
-        if(res.statusCode == 200 && res.data.errcode == 0){
-           handler.success(res.data.result)
-        }else{
-          _this.showToast('检测文章失败')
+      success: res => {
+        if (res.result.errcode == 0) {
+          handler.success(res.result.result.hits);
+        } else {
+          _this.showToast("检测失败");
         }
       },
-      fail:function(res){
-        _this.showToast('检测文章失败')
+      fail: res => {
+        _this.showToast("检测失败");
       },
-      complete:function(){
+      complete: res => {
         _this.hideLoading();
       }
     })
-
   }
-
 })
