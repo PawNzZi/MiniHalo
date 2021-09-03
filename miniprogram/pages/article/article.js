@@ -161,17 +161,7 @@ Page({
    * 喜欢文章
    */
   likePost: function () {
-    // var likeCountTime = this.data.likeCountTime;
-    // if (likeCountTime != 60) {
-    //   App.showToast("休息下，喝杯卡布奇诺");
-    // } else {
-    //   var postId = this.data.postId;
-    //   var data = {};
-    //   Api.requestPostApi('/api/content/posts/' + postId + '/likes', data, this, this.likePostSuccessFun);
-    // }
-    // var wxTimerList = this.data.wxTimerList;
-    // console.log(wxTimerList)
-    // console.log(App.globalData.LIKE_COUNT_OBJECT)
+
     var like_count = App.globalData.LIKE_COUNT_OBJECT;
     if (like_count.hasOwnProperty(this.data.postId)) {
       //如果对象中有该POSTID属性，则不允许调用Api
@@ -190,22 +180,6 @@ Page({
    */
   likePostSuccessFun: function (res, obj) {
     App.showToast("哇塞！您成功喜欢了该文章");
-    // var likeCountTime = obj.data.likeCountTime;
-    // var setLikeCount = setInterval(function () {
-    //   if (likeCountTime < 1) {
-    //     clearInterval(setLikeCount);
-    //     obj.setData({
-    //       likeCountTime: 60
-    //     })
-    //   } else {
-    //     likeCountTime = likeCountTime - 1
-    //     obj.setData({
-    //       likeCountTime: likeCountTime
-    //     })
-    //     console.log("likeCountTime:" + likeCountTime)
-    //   }
-    // }, 1000);
-
     var likeTimer = new Timer({
       beginTime: "00:00:10",
       name: 'likeTimer',
@@ -398,43 +372,6 @@ Page({
       }
     }
 
-    // var comment = e.detail.value;
-    // console.log(comment);
-    // console.log(comment.length);
-    // comment = comment.replace(/\s+/g, '');
-    // if (!comment) {
-    //   App.showToast("请输入评论");
-    // } else {
-    //   //先判断用户是否登陆
-    //   App.getUserInfo({
-    //     success(res) {
-    //       // console.log(res);
-    //       _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
-    //     },
-    //     fail() {
-    //       console.log("没有用户信息")
-    //       App.showSinglModalFun('您尚未登陆，请先授权登陆', {
-    //         success() {
-    //           // console.log("dddd")
-    //           App.showLoading("Loading");
-    //           wx.getUserProfile({
-    //             desc: '用于完善会员资料',
-    //             success: (res) => {
-    //               wx.setStorageSync('userInfo', res.userInfo)
-    //               App.showToast("授权登陆成功")
-    //             },
-    //             fail() {
-    //               App.showToast("授权登陆失败")
-    //             },
-    //             complete() {
-    //               App.hideLoading();
-    //             }
-    //           })
-    //         }
-    //       })
-    //     }
-    //   })
-    // }
   },
   /**
    * 评论成功回调
@@ -447,25 +384,6 @@ Page({
       disabled: true
     });
     App.showSinglModal('评论等待管理员审核，审核通过后立刻展示')
-    // var setCount = setInterval(function () {
-    //   var countTime = obj.data.commentCountTime;
-    //   if (countTime < 1) {
-    //     clearInterval(setCount);
-    //     obj.setData({
-    //       commentCountTime: 60,
-    //       disabled: false,
-    //       placeholder: '请输入评论'
-    //     });
-    //   } else {
-    //     countTime = countTime - 1
-    //     obj.setData({
-    //       commentCountTime: countTime,
-    //       disabled: true,
-    //       placeholder: countTime + '秒后再次评论'
-    //     });
-    //   }
-    // }, 1000);
-
     var commentTimer = new Timer({
       beginTime: "00:00:20",
       name: 'commentTimer',

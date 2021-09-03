@@ -3,7 +3,7 @@
  * @author  Roy
  * @date    2019年7月29日17:38:06
  */
-const https = 'https://13archives.lingyikz.cn' //体验版域名
+const https = 'https://xxx.xxx.xxx'
 
 const App = getApp();
 /**

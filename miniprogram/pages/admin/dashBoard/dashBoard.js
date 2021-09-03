@@ -91,7 +91,7 @@ Page({
       array[i].createTime = time.customFormatTime(array[i].createTime, 'Y-M-D  h:m:s');
       if (array[i].isAdmin) {
         array[i].email = '';
-        array[i].authorUrl = 'http://cdn.lingyikz.cn/logo.jpg';
+        array[i].authorUrl = 'http://cdn.lingyikz.cn/logo.jpg';//这个地方替换成自己的管理员logo
       } 
     }
     

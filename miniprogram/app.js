@@ -5,7 +5,7 @@ App({
       // console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
       wx.cloud.init({
-        env: 'release-lrn2i',
+        env: 'xxx',
         traceUser: true,
       })
     }
@@ -34,8 +34,8 @@ App({
     })
   },
   globalData: {
-    WX_OPENID: 'o7Vka4y6Kv6yLrULn_uKuuYGGvMo', //管理员的openid
-    AUTHORIZATIONS: 'caonimachoubi2',
+    WX_OPENID: 'xxx', //管理员的openid,添加云函数后获取到填写自己的openid
+    AUTHORIZATIONS: 'xxx',
     LIKE_COUNT_OBJECT: {}, //存储文章点赞的文章id和对应的计时器id
     COMMENT_COUNT_OBJECT: {}, //存储文章评论的文章id和对应的计时器id
     COMMENT_TIMER: {}, //存储当前计时器倒计时内容
@@ -244,7 +244,7 @@ App({
                 _this.showLoading("Loading");
                 const tempFilePaths = res.tempFilePaths
                 wx.uploadFile({
-                  url: 'https://13archives.lingyikz.cn/api/admin/attachments/upload',
+                  url: 'https://xxx.xxx.xxx/api/admin/attachments/upload',
                   filePath: tempFilePaths[0],
                   name: 'file',
                   header: {
@@ -303,35 +303,6 @@ App({
     })
   },
 
-  // articleSc: function (content, handler) {
-  //   var _this = this ;
-  //   _this.showLoading("Loading");
-  //   var data = {};
-  //   data.content = content ;
-  //   wx.request({
-  //     url: 'https://api.lingyikz.cn/textcensoring/getresult',
-  //     method: 'POST',
-  //     data: data,
-  //     header: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     success:function(res){
-  //       // console.log(res);
-  //       if(res.statusCode == 200 && res.data.errcode == 0){
-  //          handler.success(res.data.result)
-  //       }else{
-  //         _this.showToast('检测文章失败')
-  //       }
-  //     },
-  //     fail:function(res){
-  //       _this.showToast('检测文章失败')
-  //     },
-  //     complete:function(){
-  //       _this.hideLoading();
-  //     }
-  //   })
-
-  // }
   /**
    * 利用云函数调取第三方api检测文章是否有敏感词
    * @param {*} content 
