@@ -10,6 +10,8 @@
     "van-tag": "../../dist/tag/index",
     "van-popup": "../../dist/popup/index",
     "van-button": "../../dist/button/index",
-    "components-commentItem":"../../components/commentItem/commentItem"
+    "components-commentItem":"../../components/commentItem/commentItem",
+    "van-share-sheet": "../../dist/share-sheet/index",
+    "painter":"../../components/painter/painter"
   }
 }

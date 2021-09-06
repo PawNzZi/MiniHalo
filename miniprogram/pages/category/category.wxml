@@ -12,7 +12,7 @@
   <view  style="margin-left: 80px;">
     <!--文章列表-->
     <!-- <view class="content-l" wx:if="{{!isEmpty}}"></view> -->
-    <component-itemCard  array="{{articleList}}" wx:if="{{articleList.length>0}}"></component-itemCard>
+    <component-itemCard backgroundColor="#ffffff" array="{{articleList}}" wx:if="{{articleList.length>0}}"></component-itemCard>
     <van-empty wx:if="{{isEmpty}}" class="custom-empty" image="http://cdn.lingyikz.cn/empty_status_tag.jpg"
       description="骚瑞！什么都没有" />
   </view>

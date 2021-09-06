@@ -74,11 +74,13 @@ Page({
 
   toCategoryPage: function (e) {
     var slug = e.currentTarget.dataset.slug;
+    App.globalData.CATEGORY_SLUG = slug;
     wx.switchTab({
-      url: '/pages/category/category?slug=' + slug,
+      url: '/pages/category/category',
     })
   },
   toTagPage: function (e) {
+
     var slug = e.currentTarget.dataset.slug;
     var name = e.currentTarget.dataset.name;
     wx.navigateTo({

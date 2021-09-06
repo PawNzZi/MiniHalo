@@ -53,7 +53,192 @@ Page({
     showReplyPopup: false,
     textareaValue: '',
     replyComment: '',
+    showShare: false,
+    showQrcode: false,
+    options: [{
+        name: '分享好友',
+        icon: 'https://img01.yzcdn.cn/vant/share-sheet-wechat.png',
+        openType: 'share'
+      },
+      {
+        name: '小程序码',
+        icon: 'https://img01.yzcdn.cn/vant/share-sheet-weapp-qrcode.png',
+      },
+      {
+        name: '生成海报',
+        icon: 'https://img01.yzcdn.cn/vant/share-sheet-poster.png',
+      },
+      {
+        name: '复制地址',
+        icon: 'link',
+      },
+
+    ],
     warning: ['本小程序内的文章及其图片素材等均转载自互联网,如有侵权请通过小程序内客服联系告知', '本小程序内的所有文章不代表小程序主体及运营团队观点', '本小程序主体及运营团队坚持反对封建迷信，倡导科学', '本小程序主体及运营团队坚决拥护社会主义核心价值观', '本小程序内的所有文章内容不必当真或较真，当做故事看看即可，权当博君一笑', '如有用户与小程序内文章观点、想法、意见等出现分歧时，以用户自己观点为准，你说什么都对']
+  },
+  /**
+   * 打开分享popup
+   */
+  sharePost: function () {
+    this.setData({
+      showShare: true,
+      showContent: true
+    });
+  },
+  /**
+   * 关闭分享popup
+   */
+  onShareClose: function () {
+    this.setData({
+      showShare: false,
+      showContent: false
+    });
+  },
+  /**
+   * 关闭二维码popup
+   */
+  onCloseQrcodePopup: function () {
+    this.setData({
+      showQrcode: false,
+      showContent: false
+    });
+  },
+  /**
+   * 点击二维码保存按钮
+   */
+  onSaveQrcode: function () {
+    var _this = this;
+
+    var article = _this.data.article;
+    var type = _this.data.type;
+    if (type == 'qrcode') {
+      var base64 = _this.data.base64;
+      if (base64) {
+        App.saveBase64File(base64, article.title, {
+          success() {
+            _this.onCloseQrcodePopup();
+            _this.onShareClose();
+          }
+        });
+      } else {
+        App.showToast("小程序码不存在")
+      }
+    } else if (type == 'painter') {
+      var painter = _this.data.painter;
+      var painterImg = _this.data.painterImg;
+      if (painter) {
+        App.savePainteFile(painterImg, {
+          success() {
+            _this.onCloseQrcodePopup();
+            _this.onShareClose();
+          }
+        })
+      } else {
+        App.showToast("海报不存在")
+      }
+    }
+
+  },
+  /**
+   * 选择分享类型
+   * @param {*} e 
+   */
+  onShareSelect: function (e) {
+    var _this = this;
+    var index = e.detail.index;
+    var article = _this.data.article;
+    if (index == 1) {
+      //生成该页面的小程序码
+      var base64 = _this.data.base64;
+      if (base64) {
+        // console.log("有缓存")
+        _this.setData({
+          base64: base64,
+          showQrcode: true,
+          showContent: true,
+          type: 'qrcode',
+          showShare: false
+        })
+      } else {
+        //图片缓存，开始生成
+        // console.log("没有有缓存")
+        var param = article.id;
+        // var param = 'postId=' + article.id;
+        App.getProgramCode(param, 'pages/article/article', {
+          success(buffer) {
+            // console.log(buffer);
+            base64 = wx.arrayBufferToBase64(buffer)
+            _this.setData({
+              base64: base64,
+              showQrcode: true,
+              showContent: true,
+              type: 'qrcode',
+              showShare: false
+            })
+          }
+        })
+      }
+
+    } else if (index == 2) {
+      //生成该页面的海报
+      // console.log("生成海报")
+      var painter = this.data.painter;
+      if (painter) {
+        // console.log("有缓存海报")
+        var base64 = _this.data.base64;
+        _this.setData({
+          painter: App.initPainter(article, base64),
+          showQrcode: true,
+          showContent: true,
+          type: 'painter',
+          showShare: false
+        })
+      } else {
+        // console.log("没有缓存海报")
+        var param = article.id;
+        App.getProgramCode(param, 'pages/article/article', {
+          success(buffer) {
+            // console.log(buffer);
+            base64 = wx.arrayBufferToBase64(buffer)
+            painter = App.initPainter(article, base64),
+              _this.setData({
+                painter: painter,
+                showQrcode: true,
+                showContent: true,
+                type: 'painter',
+                base64: base64,
+                showShare: false
+              })
+          }
+        })
+      }
+
+    } else if (index == 3) {
+      //复制该文章地址
+      var _this = this;
+      var url = 'https://13archives.lingyikz.cn' + article.fullPath;
+      wx.setClipboardData({
+        data: url,
+        success(res) {
+          wx.getClipboardData({
+            success(res) {
+              _this.setData({
+                showShare: false,
+                showContent: false,
+              })
+            }
+          })
+        }
+      })
+    }
+  },
+  onImgOK: function (e) {
+    this.setData({
+      painterImg: e.detail.path
+    })
+  },
+  onImgErr: function (e) {
+    App.showToast("绘制失败")
   },
   /**
    * 判断是否吸顶，吸顶后处理状态栏高度
@@ -79,11 +264,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var postId = options.postId;
+    var postId;
+    var openType;
+    if (options.postId) {
+      postId = options.postId;
+      openType = 'postId';
+    } else if (options.scene) {
+      postId = options.scene;
+      openType = 'scene';
+    }
     var statusSize = App.getStatusSize();
     this.setData({
       postId: postId,
-      topSize: statusSize + 10
+      topSize: statusSize + 10,
+      openType: openType
     })
     var data = {};
     Api.requestGetApi('/api/content/posts/' + postId, data, this, this.postSuccessFun);
@@ -93,6 +287,8 @@ Page({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
+
+
   },
   /**
    * 查询post的评论
@@ -151,17 +347,49 @@ Page({
     obj.setData({
       article: article
     })
+
+    // App.getProgramCode(article.id, 'pages/article/article', {
+    //   success(buffer) {
+    //     // console.log(buffer);
+    //    var  base64 = wx.arrayBufferToBase64(buffer)
+    //    obj.setData({
+    //       painter: App.initPainter(article, base64),
+    //       // showQrcode: true,
+    //       type: 'painter',
+    //       base64: base64,
+    //       // showShare:false
+    //     })
+    //   }
+    // })
   },
   backPage: function () {
-    wx.navigateBack({
-      delta: 1,
-    })
+    var openType = this.data.openType;
+    if (openType === 'postId') {
+      wx.navigateBack({
+        delta: 1,
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    }
+
   },
   /**
    * 喜欢文章
    */
   likePost: function () {
-
+    // var likeCountTime = this.data.likeCountTime;
+    // if (likeCountTime != 60) {
+    //   App.showToast("休息下，喝杯卡布奇诺");
+    // } else {
+    //   var postId = this.data.postId;
+    //   var data = {};
+    //   Api.requestPostApi('/api/content/posts/' + postId + '/likes', data, this, this.likePostSuccessFun);
+    // }
+    // var wxTimerList = this.data.wxTimerList;
+    // console.log(wxTimerList)
+    // console.log(App.globalData.LIKE_COUNT_OBJECT)
     var like_count = App.globalData.LIKE_COUNT_OBJECT;
     if (like_count.hasOwnProperty(this.data.postId)) {
       //如果对象中有该POSTID属性，则不允许调用Api
@@ -180,6 +408,22 @@ Page({
    */
   likePostSuccessFun: function (res, obj) {
     App.showToast("哇塞！您成功喜欢了该文章");
+    // var likeCountTime = obj.data.likeCountTime;
+    // var setLikeCount = setInterval(function () {
+    //   if (likeCountTime < 1) {
+    //     clearInterval(setLikeCount);
+    //     obj.setData({
+    //       likeCountTime: 60
+    //     })
+    //   } else {
+    //     likeCountTime = likeCountTime - 1
+    //     obj.setData({
+    //       likeCountTime: likeCountTime
+    //     })
+    //     console.log("likeCountTime:" + likeCountTime)
+    //   }
+    // }, 1000);
+
     var likeTimer = new Timer({
       beginTime: "00:00:10",
       name: 'likeTimer',
@@ -220,6 +464,7 @@ Page({
         _this.setData({
           replyCommentItem: replyCommentItem,
           showReplyPopup: true,
+          showContent: true,
           replyAuthor: replyAuthor,
           replyContent: replyContent
         });
@@ -228,18 +473,26 @@ Page({
         App.showSinglModalFun('您尚未登陆，请先授权登陆', {
           success() {
             // console.log("dddd")
-            App.showLoading("Loading");
             wx.getUserProfile({
               desc: '用于完善会员资料',
               success: (res) => {
-                wx.setStorageSync('userInfo', res.userInfo)
-                App.showToast("授权登陆成功")
+                App.saveWxUser(res.userInfo, {
+                  success(result) {
+                    // console.log(result);
+                    App.showToast("授权登陆成功")
+                    var userInfo = res.userInfo;
+                    userInfo._id = result;
+                    _this.setData({
+                      userInfo: userInfo
+                    })
+                    wx.setStorageSync('userInfo', userInfo)
+                    App.globalData._ID = result;
+                    App.subMesage();
+                  }
+                })
               },
               fail() {
                 App.showToast("授权登陆失败")
-              },
-              complete() {
-                App.hideLoading();
               }
             })
           }
@@ -253,6 +506,7 @@ Page({
   onCloseReplyPopup: function () {
     this.setData({
       showReplyPopup: false,
+      showContent: false,
       textareaValue: ''
     });
   },
@@ -271,7 +525,7 @@ Page({
    * 提交回复别人的评论
    */
   replyCommitComment: function () {
-    var _this = this ;
+    var _this = this;
     var replyComment = _this.data.replyComment;
     replyComment = replyComment.replace(/\s+/g, '');
     if (!replyComment) {
@@ -285,7 +539,6 @@ Page({
           _this.commitCommentApi(replyCommentItem.id, replyComment, userInfo.nickName, userInfo.avatarUrl, _this.replyCommentSuccessFun);
         }
       })
-
     }
   },
   /**
@@ -351,18 +604,26 @@ Page({
             App.showSinglModalFun('您尚未登陆，请先授权登陆', {
               success() {
                 // console.log("dddd")
-                App.showLoading("Loading");
                 wx.getUserProfile({
                   desc: '用于完善会员资料',
                   success: (res) => {
-                    wx.setStorageSync('userInfo', res.userInfo)
-                    App.showToast("授权登陆成功")
+                    App.saveWxUser(res.userInfo, {
+                      success(result) {
+                        // console.log(result);
+                        App.showToast("授权登陆成功")
+                        var userInfo = res.userInfo;
+                        userInfo._id = result;
+                        _this.setData({
+                          userInfo: userInfo
+                        })
+                        wx.setStorageSync('userInfo', userInfo)
+                        App.globalData._ID = result;
+                        App.subMesage();
+                      }
+                    })
                   },
                   fail() {
                     App.showToast("授权登陆失败")
-                  },
-                  complete() {
-                    App.hideLoading();
                   }
                 })
               }
@@ -372,6 +633,43 @@ Page({
       }
     }
 
+    // var comment = e.detail.value;
+    // console.log(comment);
+    // console.log(comment.length);
+    // comment = comment.replace(/\s+/g, '');
+    // if (!comment) {
+    //   App.showToast("请输入评论");
+    // } else {
+    //   //先判断用户是否登陆
+    //   App.getUserInfo({
+    //     success(res) {
+    //       // console.log(res);
+    //       _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
+    //     },
+    //     fail() {
+    //       console.log("没有用户信息")
+    //       App.showSinglModalFun('您尚未登陆，请先授权登陆', {
+    //         success() {
+    //           // console.log("dddd")
+    //           App.showLoading("Loading");
+    //           wx.getUserProfile({
+    //             desc: '用于完善会员资料',
+    //             success: (res) => {
+    //               wx.setStorageSync('userInfo', res.userInfo)
+    //               App.showToast("授权登陆成功")
+    //             },
+    //             fail() {
+    //               App.showToast("授权登陆失败")
+    //             },
+    //             complete() {
+    //               App.hideLoading();
+    //             }
+    //           })
+    //         }
+    //       })
+    //     }
+    //   })
+    // }
   },
   /**
    * 评论成功回调
@@ -384,6 +682,25 @@ Page({
       disabled: true
     });
     App.showSinglModal('评论等待管理员审核，审核通过后立刻展示')
+    // var setCount = setInterval(function () {
+    //   var countTime = obj.data.commentCountTime;
+    //   if (countTime < 1) {
+    //     clearInterval(setCount);
+    //     obj.setData({
+    //       commentCountTime: 60,
+    //       disabled: false,
+    //       placeholder: '请输入评论'
+    //     });
+    //   } else {
+    //     countTime = countTime - 1
+    //     obj.setData({
+    //       commentCountTime: countTime,
+    //       disabled: true,
+    //       placeholder: countTime + '秒后再次评论'
+    //     });
+    //   }
+    // }, 1000);
+
     var commentTimer = new Timer({
       beginTime: "00:00:20",
       name: 'commentTimer',

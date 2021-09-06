@@ -1,5 +1,5 @@
 <!--components/itemCard/itemCard.wxml-->
-<view class="article-view">
+<view class="article-view" style="background:{{backgroundColor}}">
   <block wx:for="{{array}}">
     <view class="article-item" bindtap="touchItem" data-item="{{item}}">
       <van-image width="100%" height="180" src="{{item.thumbnail}}" lazy-load	fit="cover" image-class="image-class"/>

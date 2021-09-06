@@ -1,5 +1,5 @@
 <!--pages/article/article.wxml-->
-<page-meta page-style="{{ showReplyPopup ? 'overflow: hidden;' : '' }}" />
+<page-meta page-style="{{ showContent ? 'overflow: hidden;' : '' }}" />
 <view>
 	<!-- <view style="background: {{statusColor}};width: 100%;height: 20px;"></view> -->
 	<!-- 返回按钮 -->
@@ -9,6 +9,8 @@
 	<!--缩略图-->
 	<image style="width:100%;height:500rpx;border-bottom-left-radius: 18rpx;border-bottom-right-radius: 18rpx;"
 		src="{{article.thumbnail}}"></image>
+
+
 	<!--标题-->
 	<van-sticky offset-top="{{ 0 }}" bindscroll="stickyScroll">
 		<view style="background: #f8f8f9;width: 100%;height: {{statusSize}}px;"></view>
@@ -42,7 +44,9 @@
 	</view>
 	<!-- 免责申明 -->
 	<view class="mzsm-view">
-		<text style="font-weight: bold; font-size: 34rpx;color: #495060;align-self: center;margin-bottom: 20rpx;">13ARCHIVES WARNING</text>
+		<text style="font-weight: bold; font-size: 34rpx;color: #495060;align-self: center;margin-bottom: 20rpx;">
+		13ARCHIVES WARNING
+		</text>
 		<block wx:for="{{warning}}">
 			<text style="font-size: 24rpx;color: #495060;margin-top: 8rpx;letter-spacing: 3rpx;">• {{item}}</text>
 		</block>
@@ -82,10 +86,11 @@
 	<!-- 发布评论 -->
 	<view style="position: fixed;bottom: 0;width: 100%;background-color: #fff;height: 105rpx;">
 		<van-divider></van-divider>
-		<view style="display: flex;flex-direction: row;align-items: center;height: 105rpx;">
+		<view style="display: flex;flex-direction: row;align-items: center;height: 105rpx;padding: 0 30rpx 0 20rpx;">
 			<input value="{{inputValue}}" disabled="{{disabled}}" placeholder="{{placeholder}}" confirm-type="send"
 				bindconfirm="commitComment" class="input"></input>
-			<van-icon name="like" size="30px" color="#495060" bindtap="likePost" />
+			<van-icon name="like" size="30px" color="#495060" bindtap="likePost" style="margin-left: 20rpx;" />
+			<van-icon name="share" size="30px" color="#495060" bindtap="sharePost" style="margin-left: 20rpx;" />
 			<!-- <van-button type="primary" color="#495060" custom-class="commit-btn">发布</van-button> -->
 		</view>
 	</view>
@@ -98,8 +103,26 @@
 		<textarea value="{{textareaValue}}" placeholder="请输入回复的评论" maxlength="200" bindinput="onReplyInput" class="textarea"
 			placeholder-style="color:#80848f" show-confirm-bar="{{false}}" confirm-type="done"></textarea>
 		<view style="display: flex;flex-direction: row;justify-content: flex-end;">
-			<van-button color="#dddee1" bind:click="onCloseReplyPopup">取消</van-button>
-			<van-button color="#495060" bind:click="replyCommitComment">提交</van-button>
+			<van-button color="#dddee1" bind:click="onCloseReplyPopup" custom-class="replyBtn">取消</van-button>
+			<van-button color="#495060" bind:click="replyCommitComment" custom-class="replyBtn">提交</van-button>
+		</view>
+	</view>
+</van-popup>
+<van-share-sheet show="{{ showShare }}" options="{{ options }}" bind:select="onShareSelect" bind:close="onShareClose" />
+<van-popup show="{{ showQrcode }}" bind:close="onCloseQrcodePopup" round close-on-click-overlay="{{false}}">
+	<view class="qrcode-view" wx:if="{{type == 'qrcode'}}">
+		<image style="width: 200px;height: 200px;" src="data:image/png;base64,{{base64}}" wx:if="{{type == 'qrcode'}}" />
+		<view style="display: flex;flex-direction: row;justify-content: space-around;margin-top: 20rpx;">
+			<van-button color="#dddee1" bind:click="onCloseQrcodePopup">取消</van-button>
+			<van-button color="#495060" bind:click="onSaveQrcode">保存</van-button>
+		</view>
+	</view>
+	<view class="painter-view" wx:if="{{type == 'painter' }}">
+		<image mode="widthFix" class="share-image" src="{{painterImg}}" wx:if="{{type == 'painter' }}" />
+		<painter scaleRatio="3" palette="{{painter}}" bind:imgOK="onImgOK" bind:imgErr="onImgErr" />
+		<view style="display: flex;flex-direction: row;justify-content: space-around;margin-top: 30rpx;width: 100%;">
+			<van-button color="#dddee1" bind:click="onCloseQrcodePopup">取消</van-button>
+			<van-button color="#495060" bind:click="onSaveQrcode">保存</van-button>
 		</view>
 	</view>
 </van-popup>

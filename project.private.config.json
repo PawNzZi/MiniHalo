@@ -29,7 +29,7 @@
         {
           "name": "pages/article/article",
           "pathName": "pages/article/article",
-          "query": "postId=34",
+          "query": "postId=62",
           "scene": null
         },
         {
@@ -47,7 +47,7 @@
         {
           "name": "pages/article/article",
           "pathName": "pages/article/article",
-          "query": "postId=35",
+          "query": "postId=48",
           "scene": null
         },
         {

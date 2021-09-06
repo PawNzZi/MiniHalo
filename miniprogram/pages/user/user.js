@@ -7,18 +7,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-   linkList:[],
-   isAdmin:false
+    linkList: [],
+    isAdmin: false
   },
-  getWxOpenid:function(){
-    var _this = this ;
+  getWxOpenid: function () {
+    var _this = this;
     wx.cloud.callFunction({
-      name: 'wxLogin',
+      name: 'getOpenid',
       complete: res => {
-        // console.log('callFunction test result: ', res)
         var wx_openid = res.result.openid;
-        if(App.globalData.WX_OPENID == wx_openid){
-          _this.setData({isAdmin:true})
+        if (App.globalData.WX_OPENID == wx_openid) {
+
+          _this.setData({
+            isAdmin: true
+          })
         }
       }
     })
@@ -27,46 +29,50 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-    this.getWxOpenid();//获取用户openid
+
+    this.getWxOpenid(); //获取用户openid
     //判断是否已经有用户信息
     var _this = this;
     App.getUserInfo({
-      success(res){
-        _this.setData(({userInfo:res}))
+      success(res) {
+        _this.setData(({
+          userInfo: res
+        }))
       },
-      fail(){}
+      fail() {}
     });
     var data = {};
     data.sort = 'priority,desc'
-    Api.requestGetApi('/api/content/links',data,this,this.linkSuccessFun);
+    Api.requestGetApi('/api/content/links', data, this, this.linkSuccessFun);
 
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
   },
-  linkSuccessFun:function(res,obj){
+  linkSuccessFun: function (res, obj) {
     var array = res.data
     var linkList = obj.data.linkList;
-    for(var i = 0 ;i<array.length;i++){
-      if(array[i].team == 'miniprogram'){
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].team == 'miniprogram') {
         array[i].weapp = JSON.parse(array[i].description);
         linkList.push(array[i]);
       }
     }
-    obj.setData({linkList:linkList})
+    obj.setData({
+      linkList: linkList
+    })
   },
-  toLinkProgram:function(e){
+  toLinkProgram: function (e) {
     var weapp = e.currentTarget.dataset.weapp;
     wx.navigateToMiniProgram({
       appId: weapp.appId,
-      path:weapp.path
+      path: weapp.path
     })
   },
-  toAdminPage:function(){
+  toAdminPage: function () {
     App.getAdminInfo({
-      success(res){
+      success(res) {
         wx.navigateTo({
           url: '/pages/admin/dashBoard/dashBoard',
         })
@@ -74,22 +80,31 @@ Page({
     });
   },
   getUserProfile: function () {
+
     var _this = this;
     App.getUserInfo({
-      success(res){
+      success(res) {
         _this.setData({
           userInfo: res
         })
       },
-      fail(){
+      fail() {
         wx.getUserProfile({
           desc: '用于完善会员资料',
           success: (res) => {
-            _this.setData({
-              userInfo: res.userInfo
+            App.saveWxUser(res.userInfo, {
+              success(result) {
+                // console.log(result);
+                var userInfo = res.userInfo;
+                userInfo._id = result;
+                _this.setData({
+                  userInfo: userInfo
+                })
+                wx.setStorageSync('userInfo', userInfo)
+                App.globalData._ID = result;
+                App.subMesage();
+              }
             })
-            wx.setStorageSync('userInfo', res.userInfo)
-            App.showToast("授权登陆成功")
           },
           fail() {
             App.showToast("授权登陆失败")
@@ -100,14 +115,6 @@ Page({
         })
       }
     })
-    // var userInfo = wx.getStorageSync('userInfo');
-    // if (userInfo) {
-    //   _this.setData({
-    //     userInfo: userInfo
-    //   })
-    // } else {
-     
-    // }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -155,9 +162,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return App.shareAppMessage('13号档案馆','../../img/share_pictrue.jpg','/pages/user/user');
+    return App.shareAppMessage('13号档案馆', '../../img/share_pictrue.jpg', '/pages/user/user');
   },
-  onShareTimeline:function(){
-    return App.sharePyqMessage('13号档案馆','../../img/share_pictrue.jpg','../../img/share_pictrue.jpg','/pages/user/user');
+  onShareTimeline: function () {
+    return App.sharePyqMessage('13号档案馆', '../../img/share_pictrue.jpg', '../../img/share_pictrue.jpg', '/pages/user/user');
   },
 })

@@ -1,6 +1,6 @@
 /* components/itemCard/itemCard.wxss */
 .article-view {
-  background: #fff;
+  /* background: #fff; */
   padding: 25rpx ;
 }
 

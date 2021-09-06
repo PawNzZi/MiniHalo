@@ -1,5 +1,6 @@
 {
   "navigationBarTextStyle": "white",
+  "disableScroll": true,
   "usingComponents": {
     "van-field": "../../../../dist/field/index",
     "van-cell-group": "../../../../dist/cell-group/index",

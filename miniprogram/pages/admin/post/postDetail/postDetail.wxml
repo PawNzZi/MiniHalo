@@ -8,8 +8,9 @@
       placeholder-style="color:#80848f"></textarea>
   </view>
 </van-cell-group>
-<view style="display: flex;flex-direction: column;align-items: center;margin-top: 35rpx;">
-  <van-button color="#495060" bind:click="sureBtn">发布</van-button>
+<view class="bottom-btn" style="margin-top: 45rpx;padding-left: 80rpx;padding-right: 80rpx;">
+  <van-button color="#a30022" bind:click="sureBtn" custom-class="b-btn">检测文章</van-button>
+  <van-button color="#495060" bind:click="publishBtn" custom-class="b-btn">发布文章</van-button>
 </view>
 
 <van-popup custom-class="van-popup" show="{{ showPopup }}" position="right" custom-style="width: 80%;height:100%"

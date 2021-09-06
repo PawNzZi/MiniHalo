@@ -46,12 +46,17 @@
 					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">联系客服</text>
 				</button>
 			</view>
+			<view class="service-card-item">
+				<button class="button-style" open-type="openSetting">
+					<image style="width:60rpx;height:60rpx" src="../../img/setting.png"></image>
+					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">设置</text>
+				</button>
+			</view>
 			<view class="service-card-item" bindtap="toAdminPage" wx:if="{{isAdmin}}">
 				<button class="button-style">
 					<image style="width:60rpx;height:60rpx" src="../../img/admin.png"></image>
 					<text style="font-size:26rpx;color:#495060;padding-top:10rpx">管理员登陆</text>
 				</button>
-
 			</view>
 		</view>
 	</view>

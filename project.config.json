@@ -6,7 +6,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": false,
@@ -43,7 +43,7 @@
   "compileType": "miniprogram",
   "libVersion": "2.15.0",
   "appid": "wxdbec304938543dd8",
-  "projectname": "13danganshi-github",
+  "projectname": "13danganshi",
   "debugOptions": {
     "hidedInDevtools": []
   },

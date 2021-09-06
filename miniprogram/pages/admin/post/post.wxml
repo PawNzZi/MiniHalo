@@ -8,7 +8,7 @@
 <!-- <component-navigationBar type="{{3}}" backgroundColor="#fff" searchColor="" disabled="{{false}}"
 	bind:onSearch="onSearch" optionArray="{{optionArray}}" bind:clearKeyWord="clearKeyWord"  bind:dropdownChange="dropdownChange">
 </component-navigationBar> -->
-<view style="margin-top: {{navSize}}px;">
+<view class="tag-view" style="margin-top: {{navSize}}px;">
 
 	<!--文章列表-->
 	<component-itemCard array="{{articleList}}" wx:if="{{articleList.length>0}}" admin bind:touchItem="touchItem">

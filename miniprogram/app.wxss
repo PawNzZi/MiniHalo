@@ -2,4 +2,9 @@
 page{
   background: #f8f8f9;
 }
-
+.tag-view{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+  padding: 0 30rpx 15rpx 30rpx;
+}

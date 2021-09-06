@@ -2,7 +2,9 @@
 .van-divider {
   margin: 0 0 !important;
 }
-
+.van-share-sheet__button{
+  width: 80px !important;
+}
 .back-icon {
   position: absolute;
   left: 30rpx;
@@ -112,8 +114,30 @@
   flex-direction: column !important;
   border-radius: 10rpx !important;
 } */
-.van-button{
+.replyBtn{
   width: 150rpx !important;
   height: 60rpx !important;
   margin-left: 30rpx !important;
+}
+.van-button{
+  width: 150rpx !important;
+  height: 60rpx !important;
+
+}
+.qrcode-view{
+  display: flex;
+  flex-direction: column;
+  padding: 30rpx ;
+}
+.painter-view{
+  display: flex;
+  flex-direction: column;
+  padding: 30rpx ;
+  align-items: center;
+}
+.share-image {
+  width: 450rpx;
+  display: block;
+  border-radius: 16rpx;
+  box-shadow: 0px 4rpx 8px 0px rgba(0, 0, 0, 0.1);
 }

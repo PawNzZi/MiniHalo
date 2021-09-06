@@ -101,6 +101,12 @@ Page({
   /**
    * 打开侧面设置面板
    */
+  publishBtn: function () {
+    this.setData({
+      showPopup: true
+    })
+  },
+
   sureBtn: function () {
     // this.setData({
     //   showPopup: true
@@ -111,7 +117,7 @@ Page({
     if (App.checkTextIsEmpty(title) && App.checkTextIsEmpty(content)) {
       App.articleSC(content, {
         success(hits) {
-          console.log(hits);
+          // console.log(hits);
           if (hits.length > 0) {
             //检测有敏感词
             var keyword = [];
@@ -138,6 +144,40 @@ Page({
     } else {
       App.showToast("标题或内容为空");
     }
+
+    // var _this = this;
+    // var content = _this.data.content;
+    // var title = _this.data.title;
+    // if (App.checkTextIsEmpty(title) && App.checkTextIsEmpty(content)) {
+
+    //   App.articleSc(content, {
+    //     success(res) {
+    //       var hits = res.hits;
+    //       if (hits.length > 0) {
+    //         var keyword = [];
+    //         for (var i = 0; i < hits.length; i++) {
+    //           for (var j = 0; j < hits[i].word_array.length; j++) {
+    //             keyword.push(hits[i].word_array[j])
+    //           }
+    //         }
+    //         App.showModal('敏感词:' + keyword.toString(), {
+    //           success() {
+    //             _this.setData({
+    //               showPopup: true
+    //             })
+    //           }
+    //         })
+    //       } else {
+    //         _this.setData({
+    //           showPopup:true
+    //         })
+    //       }
+
+    //     }
+    //   })
+    // } else {
+    //   App.showToast("标题或内容为空")
+    // }
   },
   /**
    * 保存到草稿箱
@@ -161,6 +201,29 @@ Page({
         }
       })
     }
+  },
+  /**
+   * 批量发送模板消息
+   * @param {*} postId 
+   */
+  sendSubMessage:function(postId){
+    var subId = App.globalData.SUB_ID
+    var _this = this ;
+    wx.cloud.callFunction({
+      name:'sendMessage',
+      data:{
+        subId:subId,
+        title:_this.data.title,
+        summary:_this.data.zhaiyaoValue,
+        tip:'点击，立刻进入小程序查看',
+        postId:postId,
+      },
+      success:function(res){
+        // console.log(res)
+      },fail:function(res){
+        // console.log(res)
+      }
+    })
   },
   /**
    * 发布
@@ -220,6 +283,7 @@ Page({
    * @param {*} obj 
    */
   createPostSuccess: function (res, obj) {
+    obj.sendSubMessage(res.data.id);
     App.showSinglModalFun("操作成功", {
       success() {
         wx.navigateBack({

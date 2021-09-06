@@ -2,6 +2,7 @@
   "navigationBarTitleText": "13号档案馆",
   "navigationBarBackgroundColor": "#495060",
   "navigationBarTextStyle": "white",
+  "disableScroll": true,
   "usingComponents": {
     "van-image": "../../dist/image/index",
     "van-grid": "../../dist/grid/index",

@@ -76,7 +76,7 @@
   font-size: 36rpx;
   color: #495060;
   font-weight: bold;
-  margin: 15rpx 0 0 15rpx
+  margin: 15rpx 0 0 15rpx;
 }
 
 .scrollview-contains {
@@ -85,6 +85,9 @@
   flex-direction: row;
   white-space: nowrap;
   padding: 10rpx;
+  flex-wrap: wrap;
+  width: 120%;
+  /* justify-content: space-between; */
 }
 
 .item-view {
@@ -93,10 +96,16 @@
   border-radius: 16rpx;
   align-self: center;
   margin-right: 15rpx;
-  padding: 10rpx 20rpx;
+  margin-bottom: 15rpx;
+  padding: 10rpx 15rpx ;
   line-height: 60rpx;
-  font-size: 30rpx;
+  font-size: 24rpx;
   color: #808695;
+}
+
+/* 最后一项margin-right:auto */
+.item-view:last-child {
+  margin-right: auto; 
 }
 .category-cover{
    border-radius: 12rpx;

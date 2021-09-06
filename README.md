@@ -26,7 +26,11 @@ globalData: {AUTHORIZATIONS: 'xxxxxxx'}
     traceUser: true,
   })
   ```
-4. 打开app.js文件找到uploadThumb函数，将xxx替换为halo域名，上传附件使用
+4. 部署好云函数后到app.js文件找到下面代码块，将xxx替换为自己消息模板id
+```javascript
+globalData: {SUB_ID: 'xxxxxxx'}
+```
+5. 打开app.js文件找到uploadThumb函数，将xxx替换为halo域名，上传附件使用
 ```javascript
 wx.uploadFile({
       url: 'https://xxx/api/admin/attachments/upload',
@@ -36,17 +40,17 @@ wx.uploadFile({
     'admin-authorization': admin.access_token
   },
 ```
-5. 打开utils/api.js文件找到下面代码块，将xxxx替换为你的halo域名，halo域名必须是https协议
+6. 打开utils/api.js文件找到下面代码块，将xxxx替换为你的halo域名，halo域名必须是https协议
 ```javascript
-const https = 'https://xxx.xxx.xxxx
+const https = 'https://xxx.xxx.xxxx'
 ```
 
-6. 打开pages/user/user.wxml文件找到下面代码块，将图片地址替换为自己的，该图片为个人中心用户头像的背景
+7. 打开pages/user/user.wxml文件找到下面代码块，将图片地址替换为自己的，该图片为个人中心用户头像的背景
 ```javascript
 <view class="user-card" style="background-image: url('http://cdn.lingyikz.cn/1user_backgroud.jpg')"></view>
 ```
 
-7. 在page目录下的所有js文件里,找到以下代码，将相关信息替换成自己的
+8. 在page目录下的所有js文件里,找到以下代码，将相关信息替换成自己的
 ```javascript
 onShareAppMessage:function(){
     return App.shareAppMessage('13号档案馆', '../../img/share_pictrue.jpg', '/pages/index/index');
@@ -56,15 +60,15 @@ onShareTimeline:function(){
   };
 ```
 
-8. 打开微信小程序后台，**开发**==>**开发管理**==>**开发设置**==>**服务器域名**将自己的halo域名添加到request合法域名中
+9. 打开微信小程序后台，**开发**==>**开发管理**==>**开发设置**==>**服务器域名**将自己的halo域名添加到request合法域名中
 
-9. 继续在小程序后台，**设置**==>**第三方设置**==>**插件管理**，添加html2wxml富文本组件
+10. 继续在小程序后台，**设置**==>**第三方设置**==>**插件管理**，添加html2wxml富文本组件
 
-10. 登陆halo后台，添加分类和标签
+11. 登陆halo后台，添加分类和标签
 
-11. 登陆halo后台，打开评论功能
+12. 登陆halo后台，打开评论功能
 
-12. 个人中心里的友链，我是利用halo的友链实现的，正常进入halo后台新增友链，
+13. 个人中心里的友链，我是利用halo的友链实现的，正常进入halo后台新增友链，
 网站名称：填写成你自己的（小程序名称）
 分组：```miniprogram```
 描述：```{"appId":"小程序appid","path":"小程序跳转路径"}```
@@ -93,6 +97,8 @@ onShareTimeline:function(){
 - 调用云函数判断该用户是否为管理员（不是管理员个人中心不出现登陆入口）
 - 管理员发布文章调用云函数访问第三方api检测文章是否有敏感词
 - 管理员发布文章利用pinyin-pro自动将标题转换成拼音，并设置成slug，与halo后台发布文章时一样
+- 调用云函数，实现新增消息订阅，用户发起订阅请求，确认订阅后，每次在小程序中发布文章成功后，自动推送文章
+- 文章可分享（创建小程序码，绘制海报或复制web文章地址）
 
 # 感谢
 - [halo](https://github.com/halo-dev/halo "halo") ：一款优秀的开源博客发布应用。

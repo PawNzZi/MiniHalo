@@ -114,7 +114,7 @@ Page({
         //判断是否为管理员，替换管理员头像
         if (array[i].isAdmin) {
           array[i].email = '';
-          array[i].authorUrl = 'http://cdn.lingyikz.cn/logo.jpg';//替换成自己的管理员logo
+          array[i].authorUrl = 'http://cdn.lingyikz.cn/logo.jpg';
         } else {
           if (array[i].email != 'fwmeng_vip@163.com') {
             //非小程序用户
