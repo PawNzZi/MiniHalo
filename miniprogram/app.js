@@ -5,7 +5,7 @@ App({
       // console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
       wx.cloud.init({
-        env: 'xxxx',
+        env: 'xxx',
         traceUser: true,
       })
     }
@@ -50,7 +50,7 @@ App({
     COMMENT_TIMER: {}, //存储当前计时器倒计时内容
     CATEGORY_SLUG:'',
     IS_SUBMESSAGE:false,
-    SUB_ID :'xxxxx'
+    SUB_ID :'xxxx'
   },
   setNavSize: function () {
     // var that = this                
@@ -258,7 +258,7 @@ App({
                 _this.showLoading("Loading");
                 const tempFilePaths = res.tempFilePaths
                 wx.uploadFile({
-                  url: 'https://xxxx/api/admin/attachments/upload',
+                  url: 'https://13archives.lingyikz.cn/api/admin/attachments/upload',
                   filePath: tempFilePaths[0],
                   name: 'file',
                   header: {
@@ -305,15 +305,15 @@ App({
       complete: res => {
         _this.hideLoading();
         // console.log(res.result)
-        if (res.result.data.errCode == 87014) {
+        if (res.result.result.suggest === 'risky') {
           //命中敏感词
-          _this.showToast(res.result.msg)
-        } else if (res.result.data.errCode == 0) {
+          _this.showToast('请注意用词')
+        } else if (res.result.result.suggest === 'pass') {
           //未命中敏感词
           handler.success(res.result);
         } else {
           //其他错误
-          _this.showToast(res.result.msg)
+          _this.showToast("请注意用词")
         }
       }
     })
@@ -364,8 +364,8 @@ App({
         },
       },
       success: res => {
-        if (res.result.errcode == 0) {
-          handler.success(res.result.result.hits);
+        if (res.result.err_code == 0) {
+          handler.success(res.result.hits);
         } else {
           _this.showToast("检测失败");
         }

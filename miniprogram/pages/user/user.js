@@ -16,8 +16,8 @@ Page({
       name: 'getOpenid',
       complete: res => {
         var wx_openid = res.result.openid;
+        // console.log(wx_openid);
         if (App.globalData.WX_OPENID == wx_openid) {
-
           _this.setData({
             isAdmin: true
           })
