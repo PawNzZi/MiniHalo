@@ -36,7 +36,7 @@ exports.main = async (event, context) => {
           }
         },
         "templateId": event.subId,
-        "miniprogramState": 'developer'
+        "miniprogramState": 'formal'
       })
     }
   }

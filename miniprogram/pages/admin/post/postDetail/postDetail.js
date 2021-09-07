@@ -209,12 +209,20 @@ Page({
   sendSubMessage:function(postId){
     var subId = App.globalData.SUB_ID
     var _this = this ;
+    var summary = _this.data.zhaiyaoValue;
+    var title = _this.data.title;
+    if(title.length>20){
+       title = title.slice(0,15)+ '...'
+    }
+    if(summary.length>20){
+      summary = summary.slice(0,15)+'...';
+    }
     wx.cloud.callFunction({
       name:'sendMessage',
       data:{
         subId:subId,
-        title:_this.data.title,
-        summary:_this.data.zhaiyaoValue,
+        title:title,
+        summary:summary,
         tip:'点击，立刻进入小程序查看',
         postId:postId,
       },
