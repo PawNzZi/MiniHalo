@@ -106,7 +106,16 @@ Page({
       showPopup: true
     })
   },
-
+  deleteThumb:function(){
+    this.setData({
+      thumb: ''
+    });
+  },
+  selectThumb:function(){
+    wx.navigateTo({
+      url: '/pages/admin/attachment/attachment?type=select',
+    })
+  },
   sureBtn: function () {
     // this.setData({
     //   showPopup: true

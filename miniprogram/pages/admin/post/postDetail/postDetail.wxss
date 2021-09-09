@@ -60,6 +60,16 @@
   color: #495060 !important;
   font-size: 28rpx;
 }
+.thumb-btn{
+  display: flex;
+  flex-direction: row;
+  padding: 20rpx 0 20rpx 0;
+}
+.thumb-b-btn{
+  width: 170rpx !important;
+  height: 60rpx !important;
+  margin-right: 50rpx !important;
+}
 .bottom-btn{
   display: flex;
   flex-direction: row;

@@ -75,6 +75,10 @@
       <!-- <van-field input-class="slug-view" border="{{false}}" value="{{ thumb }}" placeholder="http(s)://"
         bind:change="getInputThumb" /> -->
       <input class="slug-view" value="{{ thumb }}" placeholder="http(s)://" bindinput="getInputThumb"/>
+      <view class="thumb-btn">
+        <van-button color="#a30022" bind:click="deleteThumb" custom-class="thumb-b-btn">移除图片</van-button>
+        <van-button color="#495060" bind:click="selectThumb" custom-class="thumb-b-btn">选择图片</van-button>
+      </view>
       <van-divider></van-divider>
     </view>
 
