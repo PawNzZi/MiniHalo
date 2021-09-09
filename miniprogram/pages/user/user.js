@@ -31,16 +31,7 @@ Page({
   onLoad: function (options) {
 
     this.getWxOpenid(); //获取用户openid
-    //判断是否已经有用户信息
-    var _this = this;
-    App.getUserInfo({
-      success(res) {
-        _this.setData(({
-          userInfo: res
-        }))
-      },
-      fail() {}
-    });
+
     var data = {};
     data.sort = 'priority,desc'
     Api.requestGetApi('/api/content/links', data, this, this.linkSuccessFun);
@@ -127,7 +118,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    //判断是否已经有用户信息
+    var _this = this;
+    App.getUserInfo({
+      success(res) {
+        _this.setData(({
+          userInfo: res
+        }))
+      },
+      fail() {}
+    });
   },
 
   /**
