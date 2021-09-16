@@ -5,7 +5,7 @@ App({
       // console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
       wx.cloud.init({
-        env: 'xxx',
+        env: 'release-lrn2i',
         traceUser: true,
       })
     }
@@ -40,17 +40,18 @@ App({
       },
       fail(){}
     })
-
   },
   globalData: {
-    WX_OPENID: 'xxx', //管理员的openid
-    AUTHORIZATIONS: 'xxx',
+    _ID:'',
+    WX_OPENID: 'o7Vka4y6Kv6yLrULn_uKuuYGGvMo', //管理员的openid
+    AUTHORIZATIONS: 'xxxxxx',
     LIKE_COUNT_OBJECT: {}, //存储文章点赞的文章id和对应的计时器id
     COMMENT_COUNT_OBJECT: {}, //存储文章评论的文章id和对应的计时器id
     COMMENT_TIMER: {}, //存储当前计时器倒计时内容
     CATEGORY_SLUG:'',
     IS_SUBMESSAGE:false,
-    SUB_ID :'xxxx'
+    SUB_ID :'tU0CExgsHC0mf7VbBzx-aw9BEjLkagSfrNZsqJbLxHY',
+    COMMENT_ID:'o4n0tOmracgVoNRoZYW6VTTELxfRUQ8kGNibs0pvDI8'
   },
   setNavSize: function () {
     // var that = this                
@@ -364,6 +365,7 @@ App({
         },
       },
       success: res => {
+        // console.log(res);
         if (res.result.err_code == 0) {
           handler.success(res.result.hits);
         } else {
@@ -645,7 +647,7 @@ App({
    */
   subMesage:function(handler){
     var _this = this ;
-    // console.log('subMesage:',_this.globalData._ID);
+    // console.log('subMesage:',_this.globalData._ID); 
     if(_this.globalData._ID && !_this.globalData.IS_SUBMESSAGE){
       _this.showModal('勾选‘总是保持以上选择’，订阅后文章更新早知道', {
         success() {
@@ -664,22 +666,26 @@ App({
    */
   acceptSubMessage:function(handler){
     var _this = this ;
-    var subId = _this.globalData.SUB_ID
+    var subId = _this.globalData.SUB_ID;
+    var commentId = _this.globalData.COMMENT_ID;
     wx.requestSubscribeMessage({
-      tmplIds: [subId],
+      tmplIds: [subId,commentId],
       success(res) {
         // console.log(res);
-        if(res[subId] === 'accept'){
+        if(res[subId] === 'accept' && res[commentId] === 'accept'){
           // console.log("同意订阅")
           handler&&handler.success(res);
+          // console.log("同意订阅2")
+          // console.log('_this.globalData._ID:'+_this.globalData._ID);
           wx.cloud.callFunction({
             name:'subMessage',
-            data:{
+            data:{ 
               subId:subId,
+              commentId:commentId,
               _id:_this.globalData._ID
             },
             success:function(res){
-              // console.log(res)
+            // console.log("success")
             _this.globalData.IS_SUBMESSAGE = true;
           
             },fail:function(res){
@@ -691,5 +697,44 @@ App({
         }
       }
     })
+  },
+  /**
+   * 发送评论消息订阅
+   * @param {*} openid 
+   * @param {*} postId 
+   * @param {*} title 
+   * @param {*} content 
+   * @param {*} username 
+   */
+ sendComment:function(openid,postId,title,content,username){
+  var _this = this ;
+  var commentId = _this.globalData.COMMENT_ID;
+  if(title.length>20){
+    title = title.slice(0,16)+'...'
   }
+  if(content.length>20){
+    content = content.slice(0,16)+'...'
+  }
+  if(username.length>20){
+    username = username.slice(0,16)+'...'
+  }
+  wx.cloud.callFunction({
+    name:'sendComment',
+    data:{
+      openid:openid,
+      postId:postId,
+      title:title,
+      content:content,
+      username:username,
+      subId:commentId
+    },success:function(res){
+      // handler.success(res.result);
+    },fail:function(res){
+      // _this.showToast("授权失败")
+    },complete:function(){
+      // _this.hideLoading();
+    }
+  })
+ }
+
 })

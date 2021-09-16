@@ -16,10 +16,10 @@ Page({
       name: 'getOpenid',
       complete: res => {
         var wx_openid = res.result.openid;
-        // console.log(wx_openid);
+        // wx.setStorageSync('openid', wx_openid);
         if (App.globalData.WX_OPENID == wx_openid) {
           _this.setData({
-            isAdmin: true
+            isAdmin: true,
           })
         }
       }
@@ -29,9 +29,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     this.getWxOpenid(); //获取用户openid
-
     var data = {};
     data.sort = 'priority,desc'
     Api.requestGetApi('/api/content/links', data, this, this.linkSuccessFun);
@@ -71,7 +69,6 @@ Page({
     });
   },
   getUserProfile: function () {
-
     var _this = this;
     App.getUserInfo({
       success(res) {
@@ -87,12 +84,13 @@ Page({
               success(result) {
                 // console.log(result);
                 var userInfo = res.userInfo;
-                userInfo._id = result;
+                userInfo._id = result._id;
                 _this.setData({
                   userInfo: userInfo
                 })
+                wx.setStorageSync('openid', result.openid);
                 wx.setStorageSync('userInfo', userInfo)
-                App.globalData._ID = result;
+                App.globalData._ID = result._id;
                 App.subMesage();
               }
             })

@@ -17,7 +17,8 @@ Page({
     commentChecked: true,
     topChecked: false,
     categoryIds: [],
-    tagIds: []
+    tagIds: [],
+    isVer:true
   },
   //获取标题
   getInputTitle: function (e) {
@@ -98,14 +99,6 @@ Page({
       showPopup: false
     })
   },
-  /**
-   * 打开侧面设置面板
-   */
-  publishBtn: function () {
-    this.setData({
-      showPopup: true
-    })
-  },
   deleteThumb:function(){
     this.setData({
       thumb: ''
@@ -116,6 +109,15 @@ Page({
       url: '/pages/admin/attachment/attachment?type=select',
     })
   },
+  /**
+   * 打开侧面设置面板
+   */
+  publishBtn: function () {
+    this.setData({
+      showPopup: true
+    })
+  },
+
   sureBtn: function () {
     // this.setData({
     //   showPopup: true
@@ -356,6 +358,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var _this = this ;
+    wx.cloud.callFunction({
+      name:'isVerify',
+      data:{},
+      success:function(res){
+        // console.log(res)
+        _this.setData({isVer:res.result.data[0].verify})
+      },fail:function(res){
+        // console.log(res)
+      }
+    })
     this.initData();
     var index = options.index;
     if (index == 0) {

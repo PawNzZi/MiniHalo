@@ -4,12 +4,11 @@
 	<!-- <view style="background: {{statusColor}};width: 100%;height: 20px;"></view> -->
 	<!-- 返回按钮 -->
 	<view class="back-icon" bindtap="backPage" style="top:{{topSize}}px">
-		<van-icon name="arrow-left" size="50rpx" />
+		<van-icon name="arrow-left" size="50rpx" color="#fff"/>
 	</view>
 	<!--缩略图-->
 	<image style="width:100%;height:500rpx;border-bottom-left-radius: 18rpx;border-bottom-right-radius: 18rpx;"
 		src="{{article.thumbnail}}"></image>
-
 
 	<!--标题-->
 	<van-sticky offset-top="{{ 0 }}" bindscroll="stickyScroll">
@@ -29,11 +28,15 @@
 						<van-icon name="like" color="#495060" size="15px" />
 						<view style="font-size:24rpx;margin-left:10rpx" class="text-bold">{{article.likes}}</view>
 					</view>
+					<view class="data-item" style="margin-left:25rpx">
+						<van-icon name="comment" color="#495060" size="15px" />
+						<view style="font-size:24rpx;margin-left:10rpx" class="text-bold">{{article.commentCount}}</view>
+					</view>
 				</view>
 				<view class="data-item">
 					<view style="font-size:24rpx;color:#495060" class="text-bold">{{article.createTime}}</view>
 				</view>
-			</view>
+			</view> 
 		</view>
 		<van-divider wx:if="{{isFixed}}"></van-divider>
 	</van-sticky>
@@ -86,9 +89,10 @@
 	<!-- 发布评论 -->
 	<view style="position: fixed;bottom: 0;width: 100%;background-color: #fff;height: 105rpx;">
 		<van-divider></van-divider>
-		<view style="display: flex;flex-direction: row;align-items: center;height: 105rpx;padding: 0 30rpx 0 20rpx;">
-			<input value="{{inputValue}}" disabled="{{disabled}}" placeholder="{{placeholder}}" confirm-type="send"
-				bindconfirm="commitComment" class="input"></input>
+		<view style="display: flex;flex-direction: row;align-items: center;height: 105rpx;padding: 0 30rpx 0 10rpx;">
+			<van-icon name="arrow-left" size="28px" color="#495060" bindtap="backPage"  wx:if="{{isFixed}}"/>
+			<textarea maxlength='300' fixed value="{{inputValue}}" disabled="{{disabled}}" placeholder="{{placeholder}}" confirm-type="send"
+				bindconfirm="commitComment" class="input" show-confirm-bar="{{false}}"></textarea>
 			<van-icon name="like" size="30px" color="#495060" bindtap="likePost" style="margin-left: 20rpx;" />
 			<van-icon name="share" size="30px" color="#495060" bindtap="sharePost" style="margin-left: 20rpx;" />
 			<!-- <van-button type="primary" color="#495060" custom-class="commit-btn">发布</van-button> -->

@@ -10,6 +10,10 @@
           <view style="font-size:22rpx;color:#515a6e;margin-right:20rpx">{{item.createTime}}</view>
           <view style="display: flex;flex-direction: row;">
             <view class="article-hot">
+              <van-icon name="comment" color="#495060" size="15px"/>
+              <text style="font-size:22rpx;color:#515a6e">{{item.commentCount}}</text>
+            </view>
+            <view class="article-hot">
               <van-icon name="like" color="#495060" size="15px"/>
               <text style="font-size:22rpx;color:#515a6e">{{item.likes}}</text>
             </view>

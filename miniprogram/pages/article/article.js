@@ -42,6 +42,7 @@ Page({
   data: {
     wxTimerList: {},
     commentList: [],
+    cloudCommentList:[],
     placeholder: '请输入评论',
     inputValue: '',
     disabled: false,
@@ -282,7 +283,7 @@ Page({
     var data = {};
     Api.requestGetApi('/api/content/posts/' + postId, data, this, this.postSuccessFun);
     this.getCommentList(0);
-
+    
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
@@ -299,7 +300,8 @@ Page({
     var postId = this.data.postId;
     var comment = {};
     comment.sort = 'createTime,desc',
-      comment.page = page;
+    comment.page = page;
+
     Api.requestGetApi('/api/content/posts/' + postId + '/comments/list_view', comment, this, this.commentSuccessFun);
   },
   /**
@@ -309,6 +311,12 @@ Page({
    */
   commentSuccessFun: function (res, obj) {
     // console.log(res);
+    // App.getPostComment(obj.data.postId,{
+    //   success(result){
+    //     console.log(result);
+    //     obj.setData({cloudCommentList:result});
+    //   }
+    // });
     var array = res.data.content;
     var commentList = obj.data.commentList;
     if (array.length > 0) {
@@ -316,19 +324,28 @@ Page({
         //将时间戳转换为日期
         array[i].createTime = time.customFormatTime(array[i].createTime, 'Y-M-D  h:m:s');
         //判断是否为管理员，替换管理员头像
-        if (array[i].isAdmin) {
+        if (array[i].isAdmin) { 
           array[i].email = '';
           array[i].authorUrl = 'http://cdn.lingyikz.cn/logo.jpg';
         } else {
-          if (array[i].email != 'fwmeng_vip@163.com') {
-            //非小程序用户
+          if (array[i].email.endsWith('@miniprogram.com') || array[i].email == 'fwmeng_vip@163.com') {
+             //小程序用户
+             array[i].miniProgram = true;
+          }else{
             array[i].authorUrl = 'https:' + array[i].avatar;
+            array[i].miniProgram = false;
           }
         }
       }
     }
-
+    // var cloudCommentList = obj.data.cloudCommentList;
+    // if(cloudCommentList.length > 0){
+    //   for(var i = 0;i<cloudCommentList.length;i++){
+    //     array[i]._id = cloudCommentList._id;
+    //   }
+    // }
     commentList = commentList.concat(array);
+    // console.log(commentList)
     obj.setData({
       commentList: commentList,
       isEmpty: res.data.isEmpty,
@@ -478,15 +495,16 @@ Page({
               success: (res) => {
                 App.saveWxUser(res.userInfo, {
                   success(result) {
-                    // console.log(result);
+                    // console.log(result); 
                     App.showToast("授权登陆成功")
                     var userInfo = res.userInfo;
-                    userInfo._id = result;
+                    userInfo._id = result._id;
                     _this.setData({
                       userInfo: userInfo
                     })
+                    wx.setStorageSync('openid', result.openid);
                     wx.setStorageSync('userInfo', userInfo)
-                    App.globalData._ID = result;
+                    App.globalData._ID = result._id;
                     App.subMesage();
                   }
                 })
@@ -521,7 +539,7 @@ Page({
       replyComment: replyComment
     });
   },
-  /**
+  /** 
    * 提交回复别人的评论
    */
   replyCommitComment: function () {
@@ -536,6 +554,7 @@ Page({
           // console.log(res)
           var userInfo = wx.getStorageSync('userInfo');
           var replyCommentItem = _this.data.replyCommentItem;
+          _this.setData({nickName:userInfo.nickName});
           _this.commitCommentApi(replyCommentItem.id, replyComment, userInfo.nickName, userInfo.avatarUrl, _this.replyCommentSuccessFun);
         }
       })
@@ -547,7 +566,15 @@ Page({
    * @param {*} obj 
    */
   replyCommentSuccessFun: function (res, obj) {
+    var replyCommentItem = obj.data.replyCommentItem;
+    var openid = (replyCommentItem.email).slice(0,28);
+    var article = obj.data.article;
+    var nickName = obj.data.nickName;
+    var replyComment = obj.data.replyComment;
+    // console.log("openid:"+openid);
+    App.sendComment(openid,obj.data.postId,article.title,replyComment,nickName);
     obj.onCloseReplyPopup();
+    //发送消息订阅
     App.showSinglModal('评论等待管理员审核，审核通过后立刻展示')
   },
   /**
@@ -564,7 +591,7 @@ Page({
     data.author = author;
     data.authorUrl = authorUrl;
     data.content = comment;
-    data.email = "fwmeng_vip@163.com";
+    data.email = wx.getStorageSync('openid')+"@miniprogram.com";
     data.parentId = parentId;
     data.postId = postId;
     Api.requestPostJSONApi('/api/content/posts/comments', data, this, callBack);
@@ -575,7 +602,6 @@ Page({
    */
   commitComment: function (e) {
     var _this = this;
-
     var comment_count = App.globalData.COMMENT_COUNT_OBJECT;
     var COMMENT_TIMER = App.globalData.COMMENT_TIMER;
     if (comment_count.hasOwnProperty(_this.data.postId) && COMMENT_TIMER.hasOwnProperty(_this.data.postId)) {
@@ -595,6 +621,7 @@ Page({
             App.msgSc(comment, {
               success(result) {
                 // console.log(result)
+                // App.postComment(res._id,_this.data.postId,comment,'',new Date().getTime());
                 _this.commitCommentApi(null, comment, res.nickName, res.avatarUrl, _this.commitContentSuccessFun);
               }
             })
@@ -612,12 +639,13 @@ Page({
                         // console.log(result);
                         App.showToast("授权登陆成功")
                         var userInfo = res.userInfo;
-                        userInfo._id = result;
+                        userInfo._id = result._id;
                         _this.setData({
                           userInfo: userInfo
                         })
+                        wx.setStorageSync('openid', result.openid);
                         wx.setStorageSync('userInfo', userInfo)
-                        App.globalData._ID = result;
+                        App.globalData._ID = result._id;
                         App.subMesage();
                       }
                     })

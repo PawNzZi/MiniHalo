@@ -34,7 +34,8 @@ Component({
       if(this.properties.admin){
         this.triggerEvent('touchItem',{item});
       }else{
-        // console.log('touchItem:'+App.globalData._ID);
+        // console.log('globalData._ID:'+App.globalData._ID);
+        // console.log('IS_SUBMESSAGE:'+App.globalData.IS_SUBMESSAGE);
         if(App.globalData._ID && !App.globalData.IS_SUBMESSAGE){
           App.acceptSubMessage({
             success(){

@@ -7,7 +7,7 @@
 					<view style="display: flex;flex-direction: row;align-items: center;">
 						<view class="comment-author">{{item.author}}</view>
 						<van-tag color="#2F8132" wx:if="{{item.isAdmin}}">管理员</van-tag>
-						<van-tag color="#f2826a" wx:elif="{{item.email != 'fwmeng_vip@163.com'}}">web</van-tag>
+						<van-tag color="#f2826a" wx:elif="{{!item.miniProgram}}">web</van-tag>
 						<van-tag color="#495060" wx:else>小程序</van-tag>
 					</view>
           <!-- 管理员才显示 -->

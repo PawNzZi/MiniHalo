@@ -67,31 +67,31 @@ Page({
         }
       })
     } else if (index == 1) {
-       //复制图片地址
-       var type = this.data.type;
-       // console.log("复制图片："+type);
-       wx.setClipboardData({
-         data: item.thumbPath,
-         success(res1) {
-           wx.getClipboardData({
-             success(res) {
-               //  console.log(res);
-                if(type){
-                 // console.log(type);
-                 var page = getCurrentPages();
-                 var perPage = page[page.length - 2];
-                 perPage.setData({
-                   thumb:res.data
-                 })
-                 wx.navigateBack({
-                   delta: 1,
-                 })
-             
-                }
-             }
-           })
-         }
-       })
+      //复制图片地址
+      var type = this.data.type;
+      // console.log("复制图片："+type);
+      wx.setClipboardData({
+        data: item.thumbPath,
+        success(res1) {
+          wx.getClipboardData({
+            success(res) {
+              //  console.log(res);
+               if(type){
+                // console.log(type);
+                var page = getCurrentPages();
+                var perPage = page[page.length - 2];
+                perPage.setData({
+                  thumb:res.data
+                })
+                wx.navigateBack({
+                  delta: 1,
+                })
+            
+               }
+            }
+          })
+        }
+      })
     } else if (index == 2) {
       App.showModal('确定删除附件 ' + item.name + ' ？', {
         success() {
@@ -172,7 +172,7 @@ Page({
       this.setData({type:type})
     }
     var naviSize = App.setNavSize();
-    this.setData({naviSize:naviSize}) 
+    this.setData({naviSize:naviSize})
   },
 
   /**

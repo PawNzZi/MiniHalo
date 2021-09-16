@@ -16,7 +16,7 @@ Component({
 		},
     logo: {
       type: String,
-      value: 'https://cdn.blog.makergyt.com/mini/assets/component-add_tips.png'
+      value: 'https://image.lingyikz.cn/logo_1630165209493.jpg'
     },
     custom: {
       type: Boolean,

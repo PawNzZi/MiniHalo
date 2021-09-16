@@ -106,7 +106,7 @@ Page({
   commentSuccess: function (res, obj) {
     // console.log(res);
     var array = res.data.content;
-    var commentList = obj.data.commentList;
+    var commentList = obj.data.commentList; 
     if (array.length > 0) {
       // console.log("长度大于0")
       for (var i = 0; i < array.length; i++) {
@@ -116,9 +116,13 @@ Page({
           array[i].email = '';
           array[i].authorUrl = 'http://cdn.lingyikz.cn/logo.jpg';
         } else {
-          if (array[i].email != 'fwmeng_vip@163.com') {
-            //非小程序用户
+          if (array[i].email.endsWith('@miniprogram.com') || array[i].email == 'fwmeng_vip@163.com') {
+            //小程序用户
+            array[i].miniProgram = true;
+    
+          }else{
             array[i].authorUrl = 'https:' + array[i].avatar;
+            array[i].miniProgram = false;
           }
         }
       }

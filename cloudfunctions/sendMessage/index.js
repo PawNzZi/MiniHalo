@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
   // }
   /**
    * 先查询到已经订阅了消息的用户
-   * 循环向这些用户发送订阅消息
+   * 循环向这些用户发送订阅消息 
    */
   const user =  await db.collection('user').where({subId:event.subId}).get();
   var list = user.data;
@@ -22,7 +22,7 @@ exports.main = async (event, context) => {
     for(var i = 0;i<list.length;i++){
       await cloud.openapi.subscribeMessage.send({
         "touser": list[i].openid,
-        "page": 'pages/article/article?postId='+event.postId,
+        "page": 'pages/article/article?scene='+event.postId,
         "lang": 'zh_CN',
         "data": {
           "thing9": {

@@ -5,7 +5,7 @@ cloud.init()
 const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const wxContext = cloud.getWXContext()
-  const sub = await db.collection('user').doc(event._id).update({data:{subId:event.subId}});
+  // const wxContext = cloud.getWXContext()
+  const sub = await db.collection('user').doc(event._id).update({data:{subId:event.subId,commentId:event.commentId}});
   return sub;
 }

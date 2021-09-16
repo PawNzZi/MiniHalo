@@ -1,14 +1,14 @@
 <!--pages/admin/post/postDetail/postDetail.wxml-->
 
 
-<van-cell-group custom-class="content-view">
+<van-cell-group custom-class="content-view" wx:if="{{!isVer}}">
   <van-field required value="{{ title }}" label="文章标题" placeholder="页面上显示的标题" bind:change="getInputTitle" />
   <view class="textarea-view">
-    <textarea class="textarea" confirm-type="done" show-confirm-bar="{{false}}" maxlength="-1" value="{{ content }}" placeholder="文章内容" bindinput="getInputContent"
-      placeholder-style="color:#80848f"></textarea>
+    <textarea class="textarea" confirm-type="done" show-confirm-bar="{{false}}" maxlength="-1" value="{{ content }}"
+      placeholder="文章内容" bindinput="getInputContent" placeholder-style="color:#80848f"></textarea>
   </view>
 </van-cell-group>
-<view class="bottom-btn" style="margin-top: 45rpx;padding-left: 80rpx;padding-right: 80rpx;">
+<view class="bottom-btn" style="margin-top: 45rpx;padding-left: 80rpx;padding-right: 80rpx;" wx:if="{{!isVer}}">
   <van-button color="#a30022" bind:click="sureBtn" custom-class="b-btn">检测文章</van-button>
   <van-button color="#495060" bind:click="publishBtn" custom-class="b-btn">发布文章</van-button>
 </view>
@@ -23,7 +23,8 @@
       <text class="set-title">文章别名:</text>
       <!-- <van-field input-class="slug-view" border="{{false}}" value="{{ slug }}" placeholder="https://xxx.xxx.xxx/archives/{slug}"
         bind:change="getInputSlug" /> -->
-        <input class="slug-view" value="{{ slug }}" placeholder="https://xxx.xxx.xxx/archives/{slug}" bindinput="getInputSlug"/>
+      <input class="slug-view" value="{{ slug }}" placeholder="https://xxx.xxx.xxx/archives/{slug}"
+        bindinput="getInputSlug" />
     </view>
     <!-- 开启评论 -->
     <view class="article-set">
@@ -65,16 +66,17 @@
     <!-- 摘要 -->
     <view class="article-set">
       <text class="set-title">摘要:</text>
-      <textarea class="zhaiyao-textarea" confirm-type="done" show-confirm-bar="{{false}}" value="{{zhaiyaoValue}}" bindinput="getInputZhaiyao"></textarea>
+      <textarea class="zhaiyao-textarea" confirm-type="done" show-confirm-bar="{{false}}" value="{{zhaiyaoValue}}"
+        bindinput="getInputZhaiyao"></textarea>
       <van-divider></van-divider>
     </view>
     <!-- 封面图 -->
     <view class="article-set">
       <text class="set-title">封面图:</text>
-      <van-image width="95%" height="350rpx" src="{{thumb}}" image-class="thumb" bindtap="uploadThumb"/>
+      <van-image width="95%" height="350rpx" src="{{thumb}}" image-class="thumb" bindtap="uploadThumb" />
       <!-- <van-field input-class="slug-view" border="{{false}}" value="{{ thumb }}" placeholder="http(s)://"
         bind:change="getInputThumb" /> -->
-      <input class="slug-view" value="{{ thumb }}" placeholder="http(s)://" bindinput="getInputThumb"/>
+      <input class="slug-view" value="{{ thumb }}" placeholder="http(s)://" bindinput="getInputThumb" />
       <view class="thumb-btn">
         <van-button color="#a30022" bind:click="deleteThumb" custom-class="thumb-b-btn">移除图片</van-button>
         <van-button color="#495060" bind:click="selectThumb" custom-class="thumb-b-btn">选择图片</van-button>

@@ -97,6 +97,18 @@
           "pathName": "pages/admin/post/postDetail/postDetail",
           "query": "index=0",
           "scene": null
+        },
+        {
+          "name": "pages/admin/post/postDetail/postDetail",
+          "pathName": "pages/admin/post/postDetail/postDetail",
+          "query": "index=1&postId=65",
+          "scene": null
+        },
+        {
+          "name": "pages/admin/post/postDetail/postDetail",
+          "pathName": "pages/admin/post/postDetail/postDetail",
+          "query": "index=1&postId=70",
+          "scene": null
         }
       ]
     }
